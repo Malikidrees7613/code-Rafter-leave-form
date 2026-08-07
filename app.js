@@ -36,6 +36,9 @@ app.use((err, req, res, next) => {
         if (err.code === "LIMIT_FILE_SIZE") {
             return res.status(400).json({ message: "File too large. Maximum size is 5MB." });
         }
+        if (err.code === "LIMIT_UNEXPECTED_FILE") {
+            return res.status(400).json({ message: "Invalid file type. Only PDF, JPG, PNG and WEBP files are allowed." });
+        }
         return res.status(400).json({ message: err.message || "File upload failed." });
     }
 

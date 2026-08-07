@@ -114,6 +114,9 @@
 <button class="p-2 text-on-surface-variant dark:text-surface-variant hover:bg-surface-container-high rounded-full transition-colors">
 <span class="material-symbols-outlined" data-icon="notifications">notifications</span>
 </button>
+<button id="logoutBtn" class="p-2 text-on-surface-variant dark:text-surface-variant hover:bg-surface-container-high rounded-full transition-colors" title="Log out">
+<span class="material-symbols-outlined" data-icon="logout">logout</span>
+</button>
 <div class="h-8 w-8 rounded-full bg-primary-container overflow-hidden border border-outline-variant ml-2 flex items-center justify-center cursor-pointer">
 <img alt="User Profile" class="object-cover w-full h-full" data-alt="A professional headshot of a young professional in a brightly lit modern office environment. They are smiling warmly. The aesthetic is clean, corporate, and minimalist." src="https://lh3.googleusercontent.com/aida-public/AB6AXuDvQygvje1-hIUF0S9Op2IgJ6E8tHcg1M7o-HuBIn5o7qXZ3K7vk2aRKJqlAvuDJ8KeVUTX3JGtqsjJ07ans99jg51zrX2BYuZ6KEofou8izWzRaWVe5i5gRqdqmO89ckAMSGuVd__YLWjYKyl0Ml6KQGeYOpvZdJj9947jbPZxXk-z6G0WC02qOqgVVeuh5m8BHHzFdPDfI3NJ8MU6I9oIAfFqcnmKxYs53R0ZhZqUKAQ1zhFO6h7kHg"/>
 </div>
@@ -253,74 +256,127 @@
 <th class="p-4 font-medium text-right">Actions</th>
 </tr>
 </thead>
-<tbody class="font-body-sm text-body-sm text-on-surface">
-<tr class="border-b border-outline-variant hover:bg-surface-container-low/50 transition-colors group">
-<td class="p-4 flex items-center gap-3">
-<div class="w-8 h-8 rounded bg-primary-container/20 flex items-center justify-center text-primary">
-<span class="material-symbols-outlined text-sm" data-icon="flight_takeoff">flight_takeoff</span>
-</div>
-<span class="font-medium">Annual Leave</span>
-</td>
-<td class="p-4 text-secondary">Oct 12, 2023</td>
-<td class="p-4 text-secondary">Oct 15, 2023</td>
-<td class="p-4 text-secondary">3 Days</td>
-<td class="p-4">
-<span class="inline-flex items-center px-2 py-1 rounded bg-surface-tint/10 text-primary font-label-caps text-label-caps">
-                                        Approved
-                                    </span>
-</td>
-<td class="p-4 text-right">
-<button class="text-secondary hover:text-primary transition-colors opacity-0 group-hover:opacity-100">
-<span class="material-symbols-outlined" data-icon="more_vert">more_vert</span>
-</button>
-</td>
-</tr>
-<tr class="border-b border-outline-variant hover:bg-surface-container-low/50 transition-colors group">
-<td class="p-4 flex items-center gap-3">
-<div class="w-8 h-8 rounded bg-tertiary-container/20 flex items-center justify-center text-tertiary">
-<span class="material-symbols-outlined text-sm" data-icon="medical_services">medical_services</span>
-</div>
-<span class="font-medium">Sick Leave</span>
-</td>
-<td class="p-4 text-secondary">Nov 02, 2023</td>
-<td class="p-4 text-secondary">Nov 03, 2023</td>
-<td class="p-4 text-secondary">2 Days</td>
-<td class="p-4">
-<span class="inline-flex items-center px-2 py-1 rounded bg-surface-variant text-on-surface-variant font-label-caps text-label-caps">
-                                        Pending
-                                    </span>
-</td>
-<td class="p-4 text-right">
-<button class="text-secondary hover:text-primary transition-colors opacity-0 group-hover:opacity-100">
-<span class="material-symbols-outlined" data-icon="more_vert">more_vert</span>
-</button>
-</td>
-</tr>
-<tr class="hover:bg-surface-container-low/50 transition-colors group">
-<td class="p-4 flex items-center gap-3">
-<div class="w-8 h-8 rounded bg-error-container/20 flex items-center justify-center text-error">
-<span class="material-symbols-outlined text-sm" data-icon="coffee">coffee</span>
-</div>
-<span class="font-medium">Casual Leave</span>
-</td>
-<td class="p-4 text-secondary">Sep 05, 2023</td>
-<td class="p-4 text-secondary">Sep 05, 2023</td>
-<td class="p-4 text-secondary">1 Day</td>
-<td class="p-4">
-<span class="inline-flex items-center px-2 py-1 rounded bg-error-container text-on-error-container font-label-caps text-label-caps">
-                                        Rejected
-                                    </span>
-</td>
-<td class="p-4 text-right">
-<button class="text-secondary hover:text-primary transition-colors opacity-0 group-hover:opacity-100">
-<span class="material-symbols-outlined" data-icon="more_vert">more_vert</span>
-</button>
-</td>
-</tr>
-</tbody>
+<tbody id="activityBody" class="font-body-sm text-body-sm text-on-surface"></tbody>
 </table>
 </div>
 </section>
 </div>
 </main>
+<script>
+(function () {
+    var token = localStorage.getItem('cr_token');
+    if (!token) { window.location.replace('SignIn.html'); return; }
+
+    var user = null;
+    var leaves = [];
+
+    function authHeaders() {
+        return { 'Authorization': 'Bearer ' + token, 'Content-Type': 'application/json' };
+    }
+    async function api(url, options) {
+        var res = await fetch(url, Object.assign({ headers: authHeaders() }, options || {}));
+        var data = await res.json().catch(function () { return {}; });
+        if (!res.ok) throw new Error(data.message || 'Request failed.');
+        return data;
+    }
+
+    var TYPE_LABELS = { annual: 'Annual Leave', sick: 'Sick Leave', personal: 'Personal Leave', unpaid: 'Unpaid Leave' };
+    var TYPE_ICONS = { annual: 'flight_takeoff', sick: 'medical_services', personal: 'person', unpaid: 'payments' };
+    var STATUS_STYLES = {
+        approved: 'bg-surface-tint/10 text-primary',
+        pending: 'bg-surface-variant text-on-surface-variant',
+        rejected: 'bg-error-container text-on-error-container',
+        cancelled: 'bg-surface-container-high text-on-surface-variant'
+    };
+
+    function formatDate(d) {
+        return new Date(d).toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' });
+    }
+
+    function render() {
+        var firstName = (user.fullName || '').split(' ')[0] || '';
+        document.getElementById('welcomeName').textContent = 'Welcome back, ' + firstName;
+
+        var balance = user.leaveBalance || {};
+        document.getElementById('metricAnnual').textContent = balance.annual != null ? balance.annual : '0';
+        document.getElementById('metricSick').textContent = balance.sick != null ? balance.sick : '0';
+
+        var pending = leaves.filter(function (l) { return l.status === 'pending'; }).length;
+        var year = new Date().getFullYear();
+        var used = leaves
+            .filter(function (l) { return l.status !== 'cancelled' && new Date(l.startDate).getFullYear() === year; })
+            .reduce(function (sum, l) { return sum + (l.duration || 0); }, 0);
+        document.getElementById('metricPending').textContent = pending;
+        document.getElementById('metricUsed').textContent = used;
+
+        renderTable();
+    }
+
+    function renderTable() {
+        var tbody = document.getElementById('activityBody');
+        tbody.innerHTML = '';
+        if (!leaves.length) {
+            tbody.innerHTML = '<tr><td colspan="6" class="p-6 text-center text-secondary">No leave requests yet. Click "Apply for Leave" to submit your first request.</td></tr>';
+            return;
+        }
+        leaves.forEach(function (leave) {
+            var tr = document.createElement('tr');
+            tr.className = 'border-b border-outline-variant hover:bg-surface-container-low/50 transition-colors group';
+            var actions;
+            if (leave.status === 'pending') {
+                actions = '<button class="text-error hover:opacity-75 transition-colors font-label-caps text-label-caps" data-cancel="' + leave._id + '">Cancel</button>';
+            } else {
+                actions = '<button class="text-secondary hover:text-primary transition-colors opacity-0 group-hover:opacity-100"><span class="material-symbols-outlined">more_vert</span></button>';
+            }
+            tr.innerHTML =
+                '<td class="p-4"><div class="flex items-center gap-3">' +
+                '<div class="w-8 h-8 rounded bg-primary-container/20 flex items-center justify-center text-primary">' +
+                '<span class="material-symbols-outlined text-sm">' + (TYPE_ICONS[leave.leaveType] || 'event') + '</span></div>' +
+                '<span class="font-medium">' + (TYPE_LABELS[leave.leaveType] || leave.leaveType) + '</span></div></td>' +
+                '<td class="p-4 text-secondary">' + formatDate(leave.startDate) + '</td>' +
+                '<td class="p-4 text-secondary">' + formatDate(leave.endDate) + '</td>' +
+                '<td class="p-4 text-secondary">' + (leave.duration || 0) + ' Day' + (leave.duration === 1 ? '' : 's') + '</td>' +
+                '<td class="p-4"><span class="inline-flex items-center px-2 py-1 rounded font-label-caps text-label-caps ' + (STATUS_STYLES[leave.status] || '') + '">' +
+                leave.status.charAt(0).toUpperCase() + leave.status.slice(1) + '</span></td>' +
+                '<td class="p-4 text-right">' + actions + '</td>';
+            tbody.appendChild(tr);
+        });
+
+        tbody.querySelectorAll('[data-cancel]').forEach(function (btn) {
+            btn.addEventListener('click', async function () {
+                if (!window.confirm('Cancel this leave request?')) return;
+                var id = btn.getAttribute('data-cancel');
+                try {
+                    await api('/api/leave/' + id + '/cancel', { method: 'PATCH' });
+                    await load();
+                } catch (err) {
+                    window.alert(err.message);
+                }
+            });
+        });
+    }
+
+    async function load() {
+        try {
+            var me = await api('/api/users/me');
+            user = me.user;
+            var list = await api('/api/leave');
+            leaves = list.leaves || [];
+            render();
+        } catch (err) {
+            if (err.message.indexOf('token') !== -1 || err.message.indexOf('log in') !== -1) {
+                localStorage.clear();
+                window.location.replace('SignIn.html');
+            } else {
+                window.alert(err.message);
+            }
+        }
+    }
+
+    document.getElementById('applyLeaveBtn').addEventListener('click', function () { window.location.href = 'LeaveForm.html'; });
+    document.getElementById('logoutBtn').addEventListener('click', function () { localStorage.clear(); window.location.replace('SignIn.html'); });
+
+    load();
+})();
+</script>
 </body></html>
