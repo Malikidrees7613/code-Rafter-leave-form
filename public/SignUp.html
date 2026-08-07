@@ -1,0 +1,213 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Sign Up - Code Rafters</title>
+<!-- Google Fonts: Inter & JetBrains Mono -->
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&amp;family=JetBrains+Mono:wght@500&amp;display=swap" rel="stylesheet"/>
+<!-- Material Symbols -->
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<!-- Tailwind CSS -->
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<!-- Tailwind Configuration -->
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "surface-container": "#eceef0",
+                        "primary-fixed-dim": "#c3c0ff",
+                        "on-error": "#ffffff",
+                        "on-secondary-fixed-variant": "#38485d",
+                        "inverse-primary": "#c3c0ff",
+                        "on-primary-fixed": "#0f0069",
+                        "tertiary-fixed": "#ffdbcc",
+                        "surface": "#f7f9fb",
+                        "on-tertiary-fixed-variant": "#7b2f00",
+                        "surface-container-lowest": "#ffffff",
+                        "secondary-container": "#d0e1fb",
+                        "surface-tint": "#4d44e3",
+                        "inverse-on-surface": "#eff1f3",
+                        "on-secondary-container": "#54647a",
+                        "on-background": "#191c1e",
+                        "primary-fixed": "#e2dfff",
+                        "surface-dim": "#d8dadc",
+                        "tertiary-container": "#a44100",
+                        "surface-variant": "#e0e3e5",
+                        "error": "#ba1a1a",
+                        "primary": "#3525cd",
+                        "secondary": "#505f76",
+                        "outline-variant": "#c7c4d8",
+                        "on-secondary": "#ffffff",
+                        "inverse-surface": "#2d3133",
+                        "surface-container-high": "#e6e8ea",
+                        "tertiary-fixed-dim": "#ffb695",
+                        "on-primary-container": "#dad7ff",
+                        "on-primary": "#ffffff",
+                        "on-tertiary": "#ffffff",
+                        "background": "#f7f9fb",
+                        "outline": "#777587",
+                        "surface-container-low": "#f2f4f6",
+                        "on-primary-fixed-variant": "#3323cc",
+                        "secondary-fixed-dim": "#b7c8e1",
+                        "on-tertiary-container": "#ffd2be",
+                        "on-error-container": "#93000a",
+                        "error-container": "#ffdad6",
+                        "on-secondary-fixed": "#0b1c30",
+                        "surface-container-highest": "#e0e3e5",
+                        "secondary-fixed": "#d3e4fe",
+                        "on-tertiary-fixed": "#351000",
+                        "on-surface-variant": "#464555",
+                        "surface-bright": "#f7f9fb",
+                        "on-surface": "#191c1e",
+                        "tertiary": "#7e3000",
+                        "primary-container": "#4f46e5"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "0.125rem",
+                        "lg": "0.25rem",
+                        "xl": "0.5rem",
+                        "full": "0.75rem"
+                    },
+                    "spacing": {
+                        "sidebar-width": "280px",
+                        "margin-mobile": "16px",
+                        "margin-desktop": "32px",
+                        "container-max": "1440px",
+                        "gutter": "24px",
+                        "base-unit": "4px"
+                    },
+                    "fontFamily": {
+                        "body-sm": ["Inter"],
+                        "headline-md": ["Inter"],
+                        "display-lg-mobile": ["Inter"],
+                        "headline-sm": ["Inter"],
+                        "display-lg": ["Inter"],
+                        "label-caps": ["JetBrains Mono"],
+                        "body-base": ["Inter"]
+                    },
+                    "fontSize": {
+                        "body-sm": ["14px", { "lineHeight": "20px", "fontWeight": "400" }],
+                        "headline-md": ["24px", { "lineHeight": "32px", "letterSpacing": "-0.01em", "fontWeight": "600" }],
+                        "display-lg-mobile": ["28px", { "lineHeight": "34px", "fontWeight": "700" }],
+                        "headline-sm": ["18px", { "lineHeight": "28px", "fontWeight": "600" }],
+                        "display-lg": ["36px", { "lineHeight": "44px", "letterSpacing": "-0.02em", "fontWeight": "700" }],
+                        "label-caps": ["12px", { "lineHeight": "16px", "letterSpacing": "0.05em", "fontWeight": "500" }],
+                        "body-base": ["16px", { "lineHeight": "24px", "fontWeight": "400" }]
+                    }
+                }
+            }
+        }
+    </script>
+<style>
+        /* Custom input styles for the form */
+        .glass-input {
+            @apply w-full bg-surface-container-lowest border border-outline-variant rounded-lg px-4 py-3 text-on-surface font-body-base focus:ring-2 focus:ring-primary focus:border-primary focus:outline-none transition-all duration-200 placeholder-on-surface-variant;
+        }
+        .input-group {
+            @apply relative w-full;
+        }
+        .input-icon {
+            @apply absolute left-4 top-1/2 transform -translate-y-1/2 text-outline;
+        }
+        .glass-input.with-icon {
+            @apply pl-12;
+        }
+    </style>
+</head>
+<body class="bg-surface text-on-surface font-body-base antialiased min-h-screen flex items-center justify-center selection:bg-primary-container selection:text-on-primary-container">
+<!-- Main Container: Split Screen Layout for Premium Corporate Feel -->
+<div class="flex flex-col lg:flex-row w-full min-h-screen">
+<!-- Left Panel: Branding & Ambient Visual (Hidden on smaller screens) -->
+<div class="hidden lg:flex lg:w-1/2 relative bg-surface-container-low overflow-hidden items-center justify-center">
+<!-- Background Image with highly detailed prompt reflecting the design system -->
+<div class="absolute inset-0 w-full h-full bg-cover bg-center" data-alt="A sophisticated, high-key abstract 3D render representing structural integrity and digital architecture. The scene features smooth, glass-like geometric shapes overlapping in a bright, light-mode environment. The color palette relies heavily on pristine whites, soft slate grays, and subtle highlights of deep indigo. Soft, ambient lighting creates gentle, diffused shadows, conveying a sense of calm productivity, professional reliability, and high-performance utility suited for a developer-centric workspace." style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuBuKPInB_RhkMmOk8Y-LMQO5Nm7Jz2rZV7QFngLh6zv2t3NVJGkN1uFQP6ltNF4I5SMrM1C3OIX2I1squl5hlFnxzxEqNOSLH0RMsAgG2LHMQWdWRd0kszg-6qpraDp-qHMLPYZYbrHBgU36MBzTaV-ywDPCDhoe4FmT2OON7e1srRTbOye1Yg_y0Ab1W84DOMxKvjQAEP-sonmsuFXMa4UtA-NyzZincQo8CSOYY660et7nXt-RqTPgQ')">
+</div>
+<!-- Overlay to ensure text legibility if needed, though high-key image should be fine -->
+<div class="absolute inset-0 bg-surface/30 backdrop-blur-sm" style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuBuKPInB_RhkMmOk8Y-LMQO5Nm7Jz2rZV7QFngLh6zv2t3NVJGkN1uFQP6ltNF4I5SMrM1C3OIX2I1squl5hlFnxzxEqNOSLH0RMsAgG2LHMQWdWRd0kszg-6qpraDp-qHMLPYZYbrHBgU36MBzTaV-ywDPCDhoe4FmT2OON7e1srRTbOye1Yg_y0Ab1W84DOMxKvjQAEP-sonmsuFXMa4UtA-NyzZincQo8CSOYY660et7nXt-RqTPgQ')"></div>
+<!-- Brand Identity Anchor -->
+<div class="relative z-10 p-12 text-left max-w-lg">
+<div class="flex items-center gap-3 mb-8">
+<span class="material-symbols-outlined text-primary text-4xl" data-weight="fill" style="font-variation-settings: 'FILL' 1;">terminal</span>
+<span class="font-headline-md text-headline-md text-primary font-bold">Code Rafters</span>
+</div>
+<h1 class="font-display-lg text-display-lg text-on-surface mb-6">Build the future with structural integrity.</h1>
+<p class="font-body-base text-body-base text-secondary">Join the Developer Portal to access tools, manage your projects, and collaborate with your team in a high-performance environment.</p>
+</div>
+</div>
+<!-- Right Panel: Sign Up Form -->
+<div class="w-full lg:w-1/2 flex items-center justify-center p-6 sm:p-12 lg:p-24 bg-surface relative z-10">
+<div class="w-full max-w-md space-y-10 mx-auto">
+<!-- Mobile Branding (Visible only on mobile/tablet) -->
+<div class="lg:hidden flex items-center justify-center gap-2 mb-8">
+<span class="material-symbols-outlined text-primary text-3xl" data-weight="fill" style="font-variation-settings: 'FILL' 1;">terminal</span>
+<span class="font-headline-md text-headline-md text-primary font-bold">Code Rafters</span>
+</div>
+<!-- Form Header -->
+<div class="text-center lg:text-left space-y-3">
+<h2 class="font-display-lg-mobile text-display-lg-mobile lg:font-display-lg lg:text-display-lg text-on-surface">Create your account</h2>
+<p class="font-body-base text-body-base text-secondary">Enter your details to get started.</p>
+</div>
+<!-- Form -->
+<form action="#" class="space-y-6" method="POST">
+<div class="space-y-5">
+<!-- Full Name -->
+<div class="input-group">
+<span class="material-symbols-outlined input-icon">person</span>
+<input class="glass-input with-icon" id="fullName" name="fullName" placeholder="Full Name" required="" type="text"/>
+</div>
+<!-- Employee ID -->
+<div class="input-group">
+<span class="material-symbols-outlined input-icon">badge</span>
+<input class="glass-input with-icon" id="employeeId" name="employeeId" placeholder="Employee ID" required="" type="text"/>
+</div>
+<!-- Work Email -->
+<div class="input-group">
+<span class="material-symbols-outlined input-icon">mail</span>
+<input class="glass-input with-icon" id="workEmail" name="workEmail" placeholder="Work Email" required="" type="email"/>
+</div>
+<!-- Password -->
+<div class="input-group">
+<span class="material-symbols-outlined input-icon">lock</span>
+<input class="glass-input with-icon" id="password" name="password" placeholder="Password" required="" type="password"/>
+</div>
+<!-- Confirm Password -->
+<div class="input-group">
+<span class="material-symbols-outlined input-icon">lock_reset</span>
+<input class="glass-input with-icon" id="confirmPassword" name="confirmPassword" placeholder="Confirm Password" required="" type="password"/>
+</div>
+</div>
+<!-- Terms & Conditions Checkbox -->
+<div class="flex items-start">
+<div class="flex items-center h-5">
+<input class="focus:ring-primary h-4 w-4 text-primary border-outline-variant rounded bg-surface-container-lowest cursor-pointer" id="terms" name="terms" required="" type="checkbox"/>
+</div>
+<div class="ml-3 text-sm">
+<label class="font-body-sm text-body-sm text-secondary cursor-pointer" for="terms">
+                                I agree to the <a class="text-primary hover:underline hover:text-primary-fixed-dim transition-colors" href="#">Terms of Service</a> and <a class="text-primary hover:underline hover:text-primary-fixed-dim transition-colors" href="#">Privacy Policy</a>.
+                            </label>
+</div>
+</div>
+<!-- Actions -->
+<div class="pt-2">
+<button class="w-full flex justify-center py-3 px-4 border border-transparent rounded-lg shadow-sm font-label-caps text-label-caps text-on-primary bg-primary hover:bg-primary-fixed-variant focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary transition-all duration-200 active:scale-[0.98]" type="submit">
+                            Create Account
+                        </button>
+</div>
+</form>
+<!-- Footer Link -->
+<div class="text-center pt-4 border-t border-outline-variant/30">
+<p class="font-body-sm text-body-sm text-secondary">
+                        Already have an account? 
+                        <a class="font-headline-sm text-headline-sm text-primary hover:text-primary-fixed-dim transition-colors ml-1" href="#">Sign In</a>
+</p>
+</div>
+</div>
+</div>
+</div>
+</body></html>

@@ -1,0 +1,326 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Code Rafters - Dashboard</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&amp;family=JetBrains+Mono:wght@500&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "tertiary-fixed": "#ffdbcc",
+                        "outline-variant": "#c7c4d8",
+                        "surface-tint": "#4d44e3",
+                        "primary-container": "#4f46e5",
+                        "background": "#f7f9fb",
+                        "on-secondary-container": "#54647a",
+                        "tertiary-fixed-dim": "#ffb695",
+                        "primary-fixed": "#e2dfff",
+                        "outline": "#777587",
+                        "primary-fixed-dim": "#c3c0ff",
+                        "secondary-container": "#d0e1fb",
+                        "surface-container-high": "#e6e8ea",
+                        "on-primary": "#ffffff",
+                        "on-surface": "#191c1e",
+                        "on-primary-fixed": "#0f0069",
+                        "tertiary": "#7e3000",
+                        "inverse-surface": "#2d3133",
+                        "surface": "#f7f9fb",
+                        "surface-variant": "#e0e3e5",
+                        "surface-container-lowest": "#ffffff",
+                        "secondary": "#505f76",
+                        "surface-container-low": "#f2f4f6",
+                        "on-tertiary-fixed": "#351000",
+                        "on-primary-fixed-variant": "#3323cc",
+                        "on-secondary": "#ffffff",
+                        "surface-bright": "#f7f9fb",
+                        "on-error": "#ffffff",
+                        "primary": "#3525cd",
+                        "secondary-fixed": "#d3e4fe",
+                        "inverse-on-surface": "#eff1f3",
+                        "surface-container": "#eceef0",
+                        "surface-dim": "#d8dadc",
+                        "on-background": "#191c1e",
+                        "on-error-container": "#93000a",
+                        "error": "#ba1a1a",
+                        "on-surface-variant": "#464555",
+                        "on-tertiary-container": "#ffd2be",
+                        "on-primary-container": "#dad7ff",
+                        "error-container": "#ffdad6",
+                        "tertiary-container": "#a44100",
+                        "on-tertiary-fixed-variant": "#7b2f00",
+                        "secondary-fixed-dim": "#b7c8e1",
+                        "on-tertiary": "#ffffff",
+                        "surface-container-highest": "#e0e3e5",
+                        "on-secondary-fixed-variant": "#38485d",
+                        "on-secondary-fixed": "#0b1c30",
+                        "inverse-primary": "#c3c0ff"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "0.125rem",
+                        "lg": "0.25rem",
+                        "xl": "0.5rem",
+                        "full": "0.75rem"
+                    },
+                    "spacing": {
+                        "gutter": "24px",
+                        "sidebar-width": "280px",
+                        "margin-desktop": "32px",
+                        "base-unit": "4px",
+                        "margin-mobile": "16px",
+                        "container-max": "1440px"
+                    },
+                    "fontFamily": {
+                        "headline-md": ["Inter"],
+                        "body-base": ["Inter"],
+                        "display-lg": ["Inter"],
+                        "label-caps": ["JetBrains Mono"],
+                        "body-sm": ["Inter"],
+                        "display-lg-mobile": ["Inter"],
+                        "headline-sm": ["Inter"]
+                    },
+                    "fontSize": {
+                        "headline-md": ["24px", { "lineHeight": "32px", "letterSpacing": "-0.01em", "fontWeight": "600" }],
+                        "body-base": ["16px", { "lineHeight": "24px", "fontWeight": "400" }],
+                        "display-lg": ["36px", { "lineHeight": "44px", "letterSpacing": "-0.02em", "fontWeight": "700" }],
+                        "label-caps": ["12px", { "lineHeight": "16px", "letterSpacing": "0.05em", "fontWeight": "500" }],
+                        "body-sm": ["14px", { "lineHeight": "20px", "fontWeight": "400" }],
+                        "display-lg-mobile": ["28px", { "lineHeight": "34px", "fontWeight": "700" }],
+                        "headline-sm": ["18px", { "lineHeight": "28px", "fontWeight": "600" }]
+                    }
+                }
+            }
+        }
+    </script>
+</head>
+<body class="bg-background text-on-background font-body-base antialiased min-h-screen selection:bg-primary selection:text-on-primary overflow-x-hidden">
+<!-- TopNavBar -->
+<nav class="bg-surface/80 dark:bg-inverse-surface/80 backdrop-blur-md fixed top-0 right-0 z-40 h-16 border-b border-outline-variant dark:border-outline shadow-sm flex justify-between items-center px-gutter ml-sidebar-width w-[calc(100%-280px)] hidden md:flex">
+<div class="flex items-center gap-4">
+<span class="font-headline-sm text-headline-sm font-bold text-primary dark:text-inverse-primary tracking-tight">Code Rafters</span>
+</div>
+<div class="flex items-center gap-6">
+<div class="relative focus-within:ring-2 focus-within:ring-primary rounded-full transition-colors flex items-center bg-surface-container-low px-4 py-2">
+<span class="material-symbols-outlined text-on-surface-variant mr-2" data-icon="search">search</span>
+<input class="bg-transparent border-none outline-none text-body-sm font-body-sm text-on-surface-variant w-48 placeholder-on-surface-variant/70" placeholder="Search..." type="text"/>
+</div>
+<div class="flex items-center gap-2">
+<button class="p-2 text-on-surface-variant dark:text-surface-variant hover:bg-surface-container-high rounded-full transition-colors">
+<span class="material-symbols-outlined" data-icon="notifications">notifications</span>
+</button>
+<div class="h-8 w-8 rounded-full bg-primary-container overflow-hidden border border-outline-variant ml-2 flex items-center justify-center cursor-pointer">
+<img alt="User Profile" class="object-cover w-full h-full" data-alt="A professional headshot of a young professional in a brightly lit modern office environment. They are smiling warmly. The aesthetic is clean, corporate, and minimalist." src="https://lh3.googleusercontent.com/aida-public/AB6AXuDvQygvje1-hIUF0S9Op2IgJ6E8tHcg1M7o-HuBIn5o7qXZ3K7vk2aRKJqlAvuDJ8KeVUTX3JGtqsjJ07ans99jg51zrX2BYuZ6KEofou8izWzRaWVe5i5gRqdqmO89ckAMSGuVd__YLWjYKyl0Ml6KQGeYOpvZdJj9947jbPZxXk-z6G0WC02qOqgVVeuh5m8BHHzFdPDfI3NJ8MU6I9oIAfFqcnmKxYs53R0ZhZqUKAQ1zhFO6h7kHg"/>
+</div>
+</div>
+</div>
+</nav>
+<!-- SideNavBar -->
+<aside class="fixed left-0 top-0 h-full w-sidebar-width bg-surface dark:bg-inverse-surface border-r border-outline-variant dark:border-outline shadow-sm z-50 flex flex-col h-full py-gutter hidden md:flex">
+<div class="px-6 mb-8 flex items-center gap-4">
+<div class="w-10 h-10 rounded-lg bg-primary-container flex items-center justify-center">
+<span class="material-symbols-outlined text-on-primary" data-icon="code">code</span>
+</div>
+<div>
+<h1 class="font-headline-sm text-headline-sm font-bold text-primary dark:text-inverse-primary">Code Rafters</h1>
+<p class="font-body-sm text-body-sm text-secondary">Employee Portal</p>
+</div>
+</div>
+<div class="px-4 mb-8">
+<button class="w-full bg-primary text-on-primary py-3 rounded-lg font-headline-sm text-headline-sm hover:bg-primary/90 transition-all duration-200 ease-in-out shadow-sm flex items-center justify-center gap-2">
+<span class="material-symbols-outlined" data-icon="add">add</span>
+                Apply for Leave
+            </button>
+</div>
+<nav class="flex-1 px-2 space-y-1 overflow-y-auto">
+<a class="flex items-center gap-3 px-4 py-3 border-l-4 border-primary bg-secondary-container/30 text-primary font-bold transition-all duration-200 ease-in-out rounded-r-lg" href="#">
+<span class="material-symbols-outlined" data-icon="dashboard">dashboard</span>
+<span class="font-body-base text-body-base">Dashboard</span>
+</a>
+<a class="flex items-center gap-3 px-4 py-3 text-secondary dark:text-secondary-fixed-dim hover:bg-surface-container-high transition-colors transition-all duration-200 ease-in-out rounded-r-lg border-l-4 border-transparent hover:border-outline-variant" href="#">
+<span class="material-symbols-outlined" data-icon="assignment">assignment</span>
+<span class="font-body-base text-body-base">My Requests</span>
+</a>
+<a class="flex items-center gap-3 px-4 py-3 text-secondary dark:text-secondary-fixed-dim hover:bg-surface-container-high transition-colors transition-all duration-200 ease-in-out rounded-r-lg border-l-4 border-transparent hover:border-outline-variant" href="#">
+<span class="material-symbols-outlined" data-icon="calendar_today">calendar_today</span>
+<span class="font-body-base text-body-base">Attendance</span>
+</a>
+<a class="flex items-center gap-3 px-4 py-3 text-secondary dark:text-secondary-fixed-dim hover:bg-surface-container-high transition-colors transition-all duration-200 ease-in-out rounded-r-lg border-l-4 border-transparent hover:border-outline-variant" href="#">
+<span class="material-symbols-outlined" data-icon="person">person</span>
+<span class="font-body-base text-body-base">Profile</span>
+</a>
+<a class="flex items-center gap-3 px-4 py-3 text-secondary dark:text-secondary-fixed-dim hover:bg-surface-container-high transition-colors transition-all duration-200 ease-in-out rounded-r-lg border-l-4 border-transparent hover:border-outline-variant" href="#">
+<span class="material-symbols-outlined" data-icon="settings">settings</span>
+<span class="font-body-base text-body-base">Settings</span>
+</a>
+</nav>
+</aside>
+<!-- Main Content Area -->
+<main class="md:ml-sidebar-width pt-16 md:pt-24 min-h-screen px-margin-mobile md:px-margin-desktop pb-12 transition-all duration-300">
+<div class="max-w-container-max mx-auto">
+<!-- Header -->
+<header class="mb-8 flex flex-col md:flex-row md:items-end justify-between gap-4">
+<div>
+<h2 class="font-display-lg-mobile md:font-display-lg text-display-lg-mobile md:text-display-lg text-on-background mb-2">Welcome back, Alex</h2>
+<p class="font-body-base text-body-base text-secondary">Here's an overview of your current leave status.</p>
+</div>
+</header>
+<!-- Metrics Bento Grid -->
+<section class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-gutter mb-12">
+<!-- Metric Card 1 -->
+<div class="bg-surface-container-lowest border border-outline-variant rounded-xl p-6 shadow-sm hover:shadow-md transition-shadow duration-200 relative overflow-hidden group">
+<div class="absolute top-0 right-0 p-4 opacity-10 group-hover:opacity-20 transition-opacity">
+<span class="material-symbols-outlined text-6xl text-primary" data-icon="event_available">event_available</span>
+</div>
+<p class="font-body-sm text-body-sm text-secondary mb-2">Remaining Paid Leave</p>
+<div class="flex items-baseline gap-2">
+<span class="font-headline-md text-headline-md text-on-surface">12</span>
+<span class="font-body-sm text-body-sm text-on-surface-variant">Days</span>
+</div>
+<div class="mt-4 flex items-center gap-1 font-label-caps text-label-caps text-primary">
+<span class="material-symbols-outlined text-sm" data-icon="trending_up">trending_up</span>
+<span>Available</span>
+</div>
+</div>
+<!-- Metric Card 2 -->
+<div class="bg-surface-container-lowest border border-outline-variant rounded-xl p-6 shadow-sm hover:shadow-md transition-shadow duration-200 relative overflow-hidden group">
+<div class="absolute top-0 right-0 p-4 opacity-10 group-hover:opacity-20 transition-opacity">
+<span class="material-symbols-outlined text-6xl text-tertiary" data-icon="medical_services">medical_services</span>
+</div>
+<p class="font-body-sm text-body-sm text-secondary mb-2">Sick Leave Available</p>
+<div class="flex items-baseline gap-2">
+<span class="font-headline-md text-headline-md text-on-surface">5</span>
+<span class="font-body-sm text-body-sm text-on-surface-variant">Days</span>
+</div>
+<div class="mt-4 flex items-center gap-1 font-label-caps text-label-caps text-on-surface-variant">
+<span class="material-symbols-outlined text-sm" data-icon="info">info</span>
+<span>Resets in Jan</span>
+</div>
+</div>
+<!-- Metric Card 3 -->
+<div class="bg-surface-container-lowest border border-outline-variant rounded-xl p-6 shadow-sm hover:shadow-md transition-shadow duration-200 relative overflow-hidden group">
+<div class="absolute top-0 right-0 p-4 opacity-10 group-hover:opacity-20 transition-opacity">
+<span class="material-symbols-outlined text-6xl text-secondary" data-icon="pending_actions">pending_actions</span>
+</div>
+<p class="font-body-sm text-body-sm text-secondary mb-2">Pending Requests</p>
+<div class="flex items-baseline gap-2">
+<span class="font-headline-md text-headline-md text-on-surface">1</span>
+<span class="font-body-sm text-body-sm text-on-surface-variant">Request</span>
+</div>
+<div class="mt-4 flex items-center gap-1 font-label-caps text-label-caps text-secondary">
+<span class="material-symbols-outlined text-sm" data-icon="hourglass_empty">hourglass_empty</span>
+<span>Awaiting Approval</span>
+</div>
+</div>
+<!-- Metric Card 4 -->
+<div class="bg-surface-container-lowest border border-outline-variant rounded-xl p-6 shadow-sm hover:shadow-md transition-shadow duration-200 relative overflow-hidden group">
+<div class="absolute top-0 right-0 p-4 opacity-10 group-hover:opacity-20 transition-opacity">
+<span class="material-symbols-outlined text-6xl text-on-surface-variant" data-icon="history">history</span>
+</div>
+<p class="font-body-sm text-body-sm text-secondary mb-2">Total Days Used</p>
+<div class="flex items-baseline gap-2">
+<span class="font-headline-md text-headline-md text-on-surface">8</span>
+<span class="font-body-sm text-body-sm text-on-surface-variant">Days</span>
+</div>
+<div class="mt-4 flex items-center gap-1 font-label-caps text-label-caps text-on-surface-variant">
+<span class="material-symbols-outlined text-sm" data-icon="calendar_month">calendar_month</span>
+<span>This Year</span>
+</div>
+</div>
+</section>
+<!-- Recent Activity Table -->
+<section class="bg-surface-container-lowest border border-outline-variant rounded-xl shadow-sm overflow-hidden">
+<div class="p-6 border-b border-outline-variant flex justify-between items-center bg-surface-bright">
+<h3 class="font-headline-sm text-headline-sm text-on-surface">Recent Activity</h3>
+<button class="font-label-caps text-label-caps text-primary hover:text-primary/80 transition-colors flex items-center gap-1">
+                        View All <span class="material-symbols-outlined text-sm" data-icon="arrow_forward">arrow_forward</span>
+</button>
+</div>
+<div class="overflow-x-auto">
+<table class="w-full text-left border-collapse">
+<thead>
+<tr class="bg-surface-container-low border-b border-outline-variant font-label-caps text-label-caps text-secondary">
+<th class="p-4 font-medium">Leave Type</th>
+<th class="p-4 font-medium">Start Date</th>
+<th class="p-4 font-medium">End Date</th>
+<th class="p-4 font-medium">Duration</th>
+<th class="p-4 font-medium">Status</th>
+<th class="p-4 font-medium text-right">Actions</th>
+</tr>
+</thead>
+<tbody class="font-body-sm text-body-sm text-on-surface">
+<tr class="border-b border-outline-variant hover:bg-surface-container-low/50 transition-colors group">
+<td class="p-4 flex items-center gap-3">
+<div class="w-8 h-8 rounded bg-primary-container/20 flex items-center justify-center text-primary">
+<span class="material-symbols-outlined text-sm" data-icon="flight_takeoff">flight_takeoff</span>
+</div>
+<span class="font-medium">Annual Leave</span>
+</td>
+<td class="p-4 text-secondary">Oct 12, 2023</td>
+<td class="p-4 text-secondary">Oct 15, 2023</td>
+<td class="p-4 text-secondary">3 Days</td>
+<td class="p-4">
+<span class="inline-flex items-center px-2 py-1 rounded bg-surface-tint/10 text-primary font-label-caps text-label-caps">
+                                        Approved
+                                    </span>
+</td>
+<td class="p-4 text-right">
+<button class="text-secondary hover:text-primary transition-colors opacity-0 group-hover:opacity-100">
+<span class="material-symbols-outlined" data-icon="more_vert">more_vert</span>
+</button>
+</td>
+</tr>
+<tr class="border-b border-outline-variant hover:bg-surface-container-low/50 transition-colors group">
+<td class="p-4 flex items-center gap-3">
+<div class="w-8 h-8 rounded bg-tertiary-container/20 flex items-center justify-center text-tertiary">
+<span class="material-symbols-outlined text-sm" data-icon="medical_services">medical_services</span>
+</div>
+<span class="font-medium">Sick Leave</span>
+</td>
+<td class="p-4 text-secondary">Nov 02, 2023</td>
+<td class="p-4 text-secondary">Nov 03, 2023</td>
+<td class="p-4 text-secondary">2 Days</td>
+<td class="p-4">
+<span class="inline-flex items-center px-2 py-1 rounded bg-surface-variant text-on-surface-variant font-label-caps text-label-caps">
+                                        Pending
+                                    </span>
+</td>
+<td class="p-4 text-right">
+<button class="text-secondary hover:text-primary transition-colors opacity-0 group-hover:opacity-100">
+<span class="material-symbols-outlined" data-icon="more_vert">more_vert</span>
+</button>
+</td>
+</tr>
+<tr class="hover:bg-surface-container-low/50 transition-colors group">
+<td class="p-4 flex items-center gap-3">
+<div class="w-8 h-8 rounded bg-error-container/20 flex items-center justify-center text-error">
+<span class="material-symbols-outlined text-sm" data-icon="coffee">coffee</span>
+</div>
+<span class="font-medium">Casual Leave</span>
+</td>
+<td class="p-4 text-secondary">Sep 05, 2023</td>
+<td class="p-4 text-secondary">Sep 05, 2023</td>
+<td class="p-4 text-secondary">1 Day</td>
+<td class="p-4">
+<span class="inline-flex items-center px-2 py-1 rounded bg-error-container text-on-error-container font-label-caps text-label-caps">
+                                        Rejected
+                                    </span>
+</td>
+<td class="p-4 text-right">
+<button class="text-secondary hover:text-primary transition-colors opacity-0 group-hover:opacity-100">
+<span class="material-symbols-outlined" data-icon="more_vert">more_vert</span>
+</button>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</section>
+</div>
+</main>
+</body></html>

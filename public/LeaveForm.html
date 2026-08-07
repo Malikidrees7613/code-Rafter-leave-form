@@ -1,0 +1,309 @@
+<!DOCTYPE html>
+
+<html lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Apply for Leave - Code Rafters</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&amp;family=JetBrains+Mono:wght@500&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+          darkMode: "class",
+          theme: {
+            extend: {
+              "colors": {
+                      "outline": "#777587",
+                      "on-primary-fixed": "#0f0069",
+                      "on-primary-container": "#dad7ff",
+                      "surface-variant": "#e0e3e5",
+                      "on-error-container": "#93000a",
+                      "primary-container": "#4f46e5",
+                      "on-secondary": "#ffffff",
+                      "inverse-surface": "#2d3133",
+                      "on-error": "#ffffff",
+                      "on-background": "#191c1e",
+                      "surface-tint": "#4d44e3",
+                      "on-tertiary-fixed": "#351000",
+                      "inverse-primary": "#c3c0ff",
+                      "on-tertiary-fixed-variant": "#7b2f00",
+                      "surface-bright": "#f7f9fb",
+                      "on-secondary-container": "#54647a",
+                      "error-container": "#ffdad6",
+                      "tertiary-container": "#a44100",
+                      "secondary": "#505f76",
+                      "on-primary-fixed-variant": "#3323cc",
+                      "tertiary": "#7e3000",
+                      "primary": "#3525cd",
+                      "surface-container-highest": "#e0e3e5",
+                      "on-surface": "#191c1e",
+                      "background": "#f7f9fb",
+                      "secondary-fixed": "#d3e4fe",
+                      "surface": "#f7f9fb",
+                      "primary-fixed-dim": "#c3c0ff",
+                      "surface-dim": "#d8dadc",
+                      "surface-container": "#eceef0",
+                      "surface-container-low": "#f2f4f6",
+                      "error": "#ba1a1a",
+                      "primary-fixed": "#e2dfff",
+                      "secondary-fixed-dim": "#b7c8e1",
+                      "on-secondary-fixed-variant": "#38485d",
+                      "tertiary-fixed": "#ffdbcc",
+                      "on-tertiary-container": "#ffd2be",
+                      "inverse-on-surface": "#eff1f3",
+                      "surface-container-lowest": "#ffffff",
+                      "outline-variant": "#c7c4d8",
+                      "on-tertiary": "#ffffff",
+                      "surface-container-high": "#e6e8ea",
+                      "secondary-container": "#d0e1fb",
+                      "on-primary": "#ffffff",
+                      "on-secondary-fixed": "#0b1c30",
+                      "on-surface-variant": "#464555",
+                      "tertiary-fixed-dim": "#ffb695"
+              },
+              "borderRadius": {
+                      "DEFAULT": "0.125rem",
+                      "lg": "0.25rem",
+                      "xl": "0.5rem",
+                      "full": "0.75rem"
+              },
+              "spacing": {
+                      "container-max": "1440px",
+                      "margin-desktop": "32px",
+                      "gutter": "24px",
+                      "sidebar-width": "280px",
+                      "margin-mobile": "16px",
+                      "base-unit": "4px"
+              },
+              "fontFamily": {
+                      "display-lg": [
+                              "Inter"
+                      ],
+                      "headline-sm": [
+                              "Inter"
+                      ],
+                      "label-caps": [
+                              "JetBrains Mono"
+                      ],
+                      "body-sm": [
+                              "Inter"
+                      ],
+                      "display-lg-mobile": [
+                              "Inter"
+                      ],
+                      "headline-md": [
+                              "Inter"
+                      ],
+                      "body-base": [
+                              "Inter"
+                      ]
+              },
+              "fontSize": {
+                      "display-lg": [
+                              "36px",
+                              {
+                                      "lineHeight": "44px",
+                                      "letterSpacing": "-0.02em",
+                                      "fontWeight": "700"
+                              }
+                      ],
+                      "headline-sm": [
+                              "18px",
+                              {
+                                      "lineHeight": "28px",
+                                      "fontWeight": "600"
+                              }
+                      ],
+                      "label-caps": [
+                              "12px",
+                              {
+                                      "lineHeight": "16px",
+                                      "letterSpacing": "0.05em",
+                                      "fontWeight": "500"
+                              }
+                      ],
+                      "body-sm": [
+                              "14px",
+                              {
+                                      "lineHeight": "20px",
+                                      "fontWeight": "400"
+                              }
+                      ],
+                      "display-lg-mobile": [
+                              "28px",
+                              {
+                                      "lineHeight": "34px",
+                                      "fontWeight": "700"
+                              }
+                      ],
+                      "headline-md": [
+                              "24px",
+                              {
+                                      "lineHeight": "32px",
+                                      "letterSpacing": "-0.01em",
+                                      "fontWeight": "600"
+                              }
+                      ],
+                      "body-base": [
+                              "16px",
+                              {
+                                      "lineHeight": "24px",
+                                      "fontWeight": "400"
+                              }
+                      ]
+              }
+      },
+          },
+        }
+    </script>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        [data-weight="fill"] .material-symbols-outlined {
+            font-variation-settings: 'FILL' 1;
+        }
+    </style>
+</head>
+<body class="bg-background text-on-background font-body-base min-h-screen flex">
+<!-- SideNavBar -->
+<nav class="hidden md:flex bg-surface dark:bg-inverse-surface text-primary dark:text-inverse-primary font-body-base text-body-base fixed left-0 top-0 h-full w-sidebar-width border-r border-outline-variant dark:border-outline shadow-sm flex flex-col py-gutter z-50">
+<div class="px-gutter mb-8 flex items-center gap-3">
+<div class="w-10 h-10 rounded bg-primary-container flex items-center justify-center text-on-primary-container font-headline-sm font-bold">
+                CR
+            </div>
+<div>
+<h1 class="font-headline-sm text-headline-sm font-bold text-primary dark:text-inverse-primary">Code Rafters</h1>
+<p class="font-body-sm text-body-sm text-secondary">Employee Portal</p>
+</div>
+</div>
+<div class="flex-1 overflow-y-auto space-y-1 px-2">
+<a class="flex items-center gap-3 px-4 py-3 text-secondary dark:text-secondary-fixed-dim hover:bg-surface-container-low transition-colors rounded" href="#">
+<span class="material-symbols-outlined">dashboard</span>
+                Dashboard
+            </a>
+<a class="flex items-center gap-3 px-4 py-3 border-l-4 border-primary bg-secondary-container/30 text-primary font-bold rounded-r" href="#">
+<span class="material-symbols-outlined" data-weight="fill">assignment</span>
+                My Requests
+            </a>
+<a class="flex items-center gap-3 px-4 py-3 text-secondary dark:text-secondary-fixed-dim hover:bg-surface-container-low transition-colors rounded" href="#">
+<span class="material-symbols-outlined">calendar_today</span>
+                Attendance
+            </a>
+<a class="flex items-center gap-3 px-4 py-3 text-secondary dark:text-secondary-fixed-dim hover:bg-surface-container-low transition-colors rounded" href="#">
+<span class="material-symbols-outlined">person</span>
+                Profile
+            </a>
+<a class="flex items-center gap-3 px-4 py-3 text-secondary dark:text-secondary-fixed-dim hover:bg-surface-container-low transition-colors rounded" href="#">
+<span class="material-symbols-outlined">settings</span>
+                Settings
+            </a>
+</div>
+<div class="px-gutter mt-auto pt-6 border-t border-outline-variant dark:border-outline">
+<button class="w-full bg-primary hover:bg-on-primary-fixed text-on-primary font-body-sm text-body-sm py-2.5 px-4 rounded transition-colors flex items-center justify-center gap-2">
+<span class="material-symbols-outlined text-[18px]">add</span>
+                 Apply for Leave
+             </button>
+</div>
+</nav>
+<!-- TopNavBar (Mobile) -->
+<header class="md:hidden bg-surface/80 dark:bg-inverse-surface/80 backdrop-blur-md fixed top-0 w-full z-40 h-16 border-b border-outline-variant dark:border-outline shadow-sm flex justify-between items-center px-margin-mobile">
+<div class="flex items-center gap-3">
+<div class="w-8 h-8 rounded bg-primary-container flex items-center justify-center text-on-primary-container font-headline-sm font-bold text-sm">
+                CR
+            </div>
+<h1 class="font-headline-sm text-headline-sm font-bold text-primary">Code Rafters</h1>
+</div>
+<button class="text-on-surface-variant dark:text-surface-variant p-2 hover:bg-surface-container-high rounded-full transition-colors">
+<span class="material-symbols-outlined">menu</span>
+</button>
+</header>
+<!-- Main Content -->
+<main class="flex-1 md:ml-sidebar-width mt-16 md:mt-0 p-margin-mobile md:p-margin-desktop bg-surface-container-lowest min-h-screen">
+<div class="max-w-3xl mx-auto w-full">
+<!-- Breadcrumb -->
+<a class="inline-flex items-center gap-2 text-secondary hover:text-primary transition-colors font-body-sm text-body-sm mb-6 group" href="#">
+<span class="material-symbols-outlined text-[18px] group-hover:-translate-x-1 transition-transform">arrow_back</span>
+                Back to Dashboard
+            </a>
+<!-- Form Card -->
+<div class="bg-surface rounded-xl shadow-sm border border-outline-variant p-6 md:p-8">
+<div class="mb-8">
+<h2 class="font-headline-md text-headline-md text-on-surface mb-2">Apply for Leave</h2>
+<p class="font-body-sm text-body-sm text-secondary">Submit a new time-off request for approval.</p>
+</div>
+<form class="space-y-6">
+<!-- Leave Type -->
+<div>
+<label class="block font-label-caps text-label-caps text-on-surface-variant mb-2">Leave Type <span class="text-error">*</span></label>
+<select class="w-full bg-surface-container-lowest border border-outline-variant rounded-lg px-4 py-2.5 font-body-base text-body-base text-on-surface focus:ring-2 focus:ring-primary focus:border-primary transition-all appearance-none outline-none">
+<option disabled="" selected="" value="">Select leave type...</option>
+<option value="annual">Annual Leave</option>
+<option value="sick">Sick Leave</option>
+<option value="personal">Personal Leave</option>
+<option value="unpaid">Unpaid Leave</option>
+</select>
+</div>
+<!-- Dates -->
+<div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+<div>
+<label class="block font-label-caps text-label-caps text-on-surface-variant mb-2">Start Date <span class="text-error">*</span></label>
+<div class="relative">
+<span class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-secondary pointer-events-none">calendar_month</span>
+<input class="w-full bg-surface-container-lowest border border-outline-variant rounded-lg pl-10 pr-4 py-2.5 font-body-base text-body-base text-on-surface focus:ring-2 focus:ring-primary focus:border-primary transition-all outline-none" type="date"/>
+</div>
+</div>
+<div>
+<label class="block font-label-caps text-label-caps text-on-surface-variant mb-2">End Date <span class="text-error">*</span></label>
+<div class="relative">
+<span class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-secondary pointer-events-none">calendar_month</span>
+<input class="w-full bg-surface-container-lowest border border-outline-variant rounded-lg pl-10 pr-4 py-2.5 font-body-base text-body-base text-on-surface focus:ring-2 focus:ring-primary focus:border-primary transition-all outline-none" type="date"/>
+</div>
+</div>
+</div>
+<!-- Estimated Duration Badge -->
+<div class="flex items-center gap-3 bg-secondary-container/20 p-3 rounded-lg border border-secondary-container">
+<span class="material-symbols-outlined text-secondary">schedule</span>
+<div>
+<p class="font-label-caps text-label-caps text-secondary uppercase tracking-wider mb-0.5">Estimated Duration</p>
+<p class="font-body-sm text-body-sm text-on-surface font-medium">0 days</p>
+</div>
+</div>
+<!-- Reason -->
+<div>
+<label class="block font-label-caps text-label-caps text-on-surface-variant mb-2">Reason for Leave</label>
+<textarea class="w-full bg-surface-container-lowest border border-outline-variant rounded-lg px-4 py-3 font-body-base text-body-base text-on-surface focus:ring-2 focus:ring-primary focus:border-primary transition-all outline-none resize-y" placeholder="Briefly describe the reason for your request..." rows="4"></textarea>
+</div>
+<!-- Emergency Contact -->
+<div>
+<label class="block font-label-caps text-label-caps text-on-surface-variant mb-2">Emergency Contact During Leave</label>
+<div class="relative">
+<span class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-secondary pointer-events-none">contact_phone</span>
+<input class="w-full bg-surface-container-lowest border border-outline-variant rounded-lg pl-10 pr-4 py-2.5 font-body-base text-body-base text-on-surface focus:ring-2 focus:ring-primary focus:border-primary transition-all outline-none" placeholder="Name and Phone Number" type="text"/>
+</div>
+</div>
+<!-- Attachment -->
+<div>
+<label class="block font-label-caps text-label-caps text-on-surface-variant mb-2">Attachments (Medical Certificate, etc.)</label>
+<div class="border-2 border-dashed border-outline-variant rounded-lg p-6 flex flex-col items-center justify-center text-center hover:bg-surface-container-low hover:border-primary transition-colors cursor-pointer group">
+<span class="material-symbols-outlined text-secondary group-hover:text-primary mb-2 text-[28px]">upload_file</span>
+<p class="font-body-sm text-body-sm text-on-surface mb-1"><span class="text-primary font-medium">Click to upload</span> or drag and drop</p>
+<p class="font-label-caps text-label-caps text-secondary">PDF, JPG, PNG (Max 5MB)</p>
+</div>
+</div>
+<!-- Actions -->
+<div class="pt-6 border-t border-outline-variant flex items-center justify-end gap-4">
+<button class="px-6 py-2.5 font-body-sm text-body-sm font-medium text-secondary hover:text-on-surface transition-colors" type="button">
+                            Cancel
+                        </button>
+<button class="px-6 py-2.5 font-body-sm text-body-sm font-medium bg-primary hover:bg-on-primary-fixed text-on-primary rounded-lg transition-colors flex items-center gap-2" type="submit">
+                            Submit Request
+                            <span class="material-symbols-outlined text-[18px]">send</span>
+</button>
+</div>
+</form>
+</div>
+</div>
+</main>
+</body></html>
