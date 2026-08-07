@@ -95,7 +95,6 @@
     </script>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&amp;family=JetBrains+Mono:wght@500&amp;display=swap" rel="stylesheet">
 <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet">
-<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet">
 </head>
 <body class="bg-surface text-on-surface font-body-base antialiased min-h-screen flex">
 <!-- Left Side: Visual Brand Area (Hidden on Mobile) -->
@@ -128,8 +127,10 @@
                 <h2 class="font-display-lg-mobile text-display-lg-mobile lg:font-display-lg lg:text-display-lg text-on-surface">Sign In</h2>
                 <p class="font-body-base text-body-base text-secondary">Welcome back to the portal.</p>
             </div>
+            <!-- Status Message -->
+            <div id="authMessage" class="hidden mb-4"></div>
             <!-- Form -->
-            <form action="#" class="space-y-6" method="POST">
+            <form id="loginForm" class="space-y-6" novalidate>
                 <div class="space-y-5">
                     <div class="relative w-full">
                         <label class="block font-body-sm text-body-sm font-medium text-on-surface mb-1" for="email">Email address</label>
@@ -152,7 +153,7 @@
                         <label class="ml-2 block font-body-sm text-body-sm text-secondary cursor-pointer" for="remember-me">Remember me</label>
                     </div>
                     <div class="font-body-sm text-body-sm">
-                        <a class="font-medium text-primary hover:text-primary-fixed-dim transition-colors" href="#">Forgot password?</a>
+                        <a id="forgotLink" class="font-medium text-primary hover:text-primary-fixed-dim transition-colors" href="#">Forgot password?</a>
                     </div>
                 </div>
                 <div class="pt-2">
@@ -162,11 +163,52 @@
                     </button>
                 </div>
             </form>
+            <!-- Forgot Password Flow -->
+            <div id="forgotSection" class="space-y-6 hidden">
+                <div class="text-center lg:text-left space-y-3">
+                    <h2 class="font-display-lg-mobile text-display-lg-mobile lg:font-display-lg lg:text-display-lg text-on-surface">Reset Password</h2>
+                    <p class="font-body-base text-body-base text-secondary">Enter your email to receive a reset code.</p>
+                </div>
+                <div id="forgotStepEmail" class="space-y-6">
+                    <div class="relative w-full">
+                        <label class="block font-body-sm text-body-sm font-medium text-on-surface mb-1" for="forgotEmail">Email address</label>
+                        <div class="relative">
+                            <span class="material-symbols-outlined absolute left-4 top-1/2 transform -translate-y-1/2 text-outline">mail</span>
+                            <input class="w-full bg-surface-container-lowest border border-outline-variant rounded-lg pl-12 pr-4 py-3 text-on-surface font-body-base focus:ring-2 focus:ring-primary focus:border-primary focus:outline-none transition-all duration-200" id="forgotEmail" type="email" placeholder="you@coderafters.com" required>
+                        </div>
+                    </div>
+                    <button id="sendResetBtn" type="button" class="w-full flex justify-center items-center gap-2 py-3 px-4 border border-transparent rounded-lg shadow-sm font-body-base text-body-base font-medium text-on-primary bg-primary hover:bg-primary/90 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary transition-all duration-200 active:scale-[0.98]">
+                        Send Reset Code
+                    </button>
+                </div>
+                <div id="forgotStepReset" class="space-y-6 hidden">
+                    <div class="relative w-full">
+                        <label class="block font-body-sm text-body-sm font-medium text-on-surface mb-1" for="resetCode">Reset code</label>
+                        <div class="relative">
+                            <span class="material-symbols-outlined absolute left-4 top-1/2 transform -translate-y-1/2 text-outline">pin</span>
+                            <input class="w-full bg-surface-container-lowest border border-outline-variant rounded-lg pl-12 pr-4 py-3 text-on-surface font-body-base focus:ring-2 focus:ring-primary focus:border-primary focus:outline-none transition-all duration-200" id="resetCode" placeholder="6-digit code" inputmode="numeric" required>
+                        </div>
+                    </div>
+                    <div class="relative w-full">
+                        <label class="block font-body-sm text-body-sm font-medium text-on-surface mb-1" for="newPassword">New password</label>
+                        <div class="relative">
+                            <span class="material-symbols-outlined absolute left-4 top-1/2 transform -translate-y-1/2 text-outline">lock</span>
+                            <input class="w-full bg-surface-container-lowest border border-outline-variant rounded-lg pl-12 pr-4 py-3 text-on-surface font-body-base focus:ring-2 focus:ring-primary focus:border-primary focus:outline-none transition-all duration-200" id="newPassword" type="password" placeholder="At least 6 characters" required>
+                        </div>
+                    </div>
+                    <button id="resetPasswordBtn" type="button" class="w-full flex justify-center items-center gap-2 py-3 px-4 border border-transparent rounded-lg shadow-sm font-body-base text-body-base font-medium text-on-primary bg-primary hover:bg-primary/90 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary transition-all duration-200 active:scale-[0.98]">
+                        Reset Password
+                    </button>
+                </div>
+                <div class="text-center">
+                    <a href="#" id="backToLogin" class="font-body-sm text-body-sm font-medium text-primary hover:text-primary-fixed-dim transition-colors">Back to sign in</a>
+                </div>
+            </div>
             <!-- Footer Link -->
             <div class="text-center pt-4 border-t border-outline-variant/30">
                 <p class="font-body-sm text-body-sm text-secondary">
                     Don't have an account? 
-                    <a class="font-medium text-primary hover:text-primary-fixed-dim transition-colors ml-1" href="#">Sign Up</a>
+                    <a class="font-medium text-primary hover:text-primary-fixed-dim transition-colors ml-1" href="SignUp.html">Sign Up</a>
                 </p>
             </div>
         </div>
@@ -174,4 +216,100 @@
 </div>
 
 
+<script>
+(function () {
+    var loginForm = document.getElementById('loginForm');
+    var authMessage = document.getElementById('authMessage');
+    var forgotSection = document.getElementById('forgotSection');
+    var forgotStepEmail = document.getElementById('forgotStepEmail');
+    var forgotStepReset = document.getElementById('forgotStepReset');
+    var resetEmail = '';
+    var busy = false;
+
+    function showMessage(text, type) {
+        authMessage.textContent = text;
+        authMessage.className = 'mb-4 px-4 py-3 rounded-lg text-sm font-medium ' +
+            (type === 'error' ? 'bg-error-container text-on-error-container' : 'bg-secondary-container text-on-secondary-container');
+    }
+    function hideMessage() { authMessage.classList.add('hidden'); }
+
+    function showLogin() {
+        loginForm.classList.remove('hidden');
+        forgotSection.classList.add('hidden');
+        authMessage.classList.remove('hidden');
+    }
+    function showForgot() {
+        loginForm.classList.add('hidden');
+        forgotSection.classList.remove('hidden');
+        authMessage.classList.add('hidden');
+    }
+
+    async function api(url, body) {
+        var res = await fetch(url, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(body)
+        });
+        var data = await res.json().catch(function () { return {}; });
+        if (!res.ok) throw new Error(data.message || 'Request failed.');
+        return data;
+    }
+
+    loginForm.addEventListener('submit', async function (e) {
+        e.preventDefault();
+        if (busy) return;
+        busy = true;
+        hideMessage();
+        var email = document.getElementById('email').value.trim();
+        var password = document.getElementById('password').value;
+        try {
+            var data = await api('/api/auth/login', { email: email, password: password });
+            localStorage.setItem('cr_token', data.token);
+            localStorage.setItem('cr_user', JSON.stringify(data.user));
+            window.location.href = 'EmployeeDashboard.html';
+        } catch (err) {
+            showMessage(err.message, 'error');
+            busy = false;
+        }
+    });
+
+    document.getElementById('forgotLink').addEventListener('click', function (e) {
+        e.preventDefault();
+        hideMessage();
+        showForgot();
+    });
+    document.getElementById('backToLogin').addEventListener('click', function (e) {
+        e.preventDefault();
+        forgotStepReset.classList.add('hidden');
+        forgotStepEmail.classList.remove('hidden');
+        showLogin();
+    });
+    document.getElementById('sendResetBtn').addEventListener('click', async function () {
+        resetEmail = document.getElementById('forgotEmail').value.trim();
+        if (!resetEmail) { showMessage('Please enter your email address.', 'error'); return; }
+        hideMessage();
+        try {
+            await api('/api/auth/forgot-password', { email: resetEmail });
+            forgotStepEmail.classList.add('hidden');
+            forgotStepReset.classList.remove('hidden');
+            showMessage('If an account exists for this email, a reset code has been sent to it.', 'success');
+        } catch (err) {
+            showMessage(err.message, 'error');
+        }
+    });
+    document.getElementById('resetPasswordBtn').addEventListener('click', async function () {
+        var code = document.getElementById('resetCode').value.trim();
+        var password = document.getElementById('newPassword').value;
+        if (!code || !password) { showMessage('Please fill in the reset code and new password.', 'error'); return; }
+        hideMessage();
+        try {
+            await api('/api/auth/reset-password', { email: resetEmail, code: code, password: password });
+            showLogin();
+            showMessage('Password reset successfully. You can now log in.', 'success');
+        } catch (err) {
+            showMessage(err.message, 'error');
+        }
+    });
+})();
+</script>
 </body></html>

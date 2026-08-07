@@ -132,7 +132,7 @@
 </div>
 </div>
 <div class="px-4 mb-8">
-<button class="w-full bg-primary text-on-primary py-3 rounded-lg font-headline-sm text-headline-sm hover:bg-primary/90 transition-all duration-200 ease-in-out shadow-sm flex items-center justify-center gap-2">
+<button id="applyLeaveBtn" class="w-full bg-primary text-on-primary py-3 rounded-lg font-headline-sm text-headline-sm hover:bg-primary/90 transition-all duration-200 ease-in-out shadow-sm flex items-center justify-center gap-2">
 <span class="material-symbols-outlined" data-icon="add">add</span>
                 Apply for Leave
             </button>
@@ -166,7 +166,7 @@
 <!-- Header -->
 <header class="mb-8 flex flex-col md:flex-row md:items-end justify-between gap-4">
 <div>
-<h2 class="font-display-lg-mobile md:font-display-lg text-display-lg-mobile md:text-display-lg text-on-background mb-2">Welcome back, Alex</h2>
+<h2 id="welcomeName" class="font-display-lg-mobile md:font-display-lg text-display-lg-mobile md:text-display-lg text-on-background mb-2">Welcome back</h2>
 <p class="font-body-base text-body-base text-secondary">Here's an overview of your current leave status.</p>
 </div>
 </header>
@@ -179,7 +179,7 @@
 </div>
 <p class="font-body-sm text-body-sm text-secondary mb-2">Remaining Paid Leave</p>
 <div class="flex items-baseline gap-2">
-<span class="font-headline-md text-headline-md text-on-surface">12</span>
+<span id="metricAnnual" class="font-headline-md text-headline-md text-on-surface">0</span>
 <span class="font-body-sm text-body-sm text-on-surface-variant">Days</span>
 </div>
 <div class="mt-4 flex items-center gap-1 font-label-caps text-label-caps text-primary">
@@ -194,7 +194,7 @@
 </div>
 <p class="font-body-sm text-body-sm text-secondary mb-2">Sick Leave Available</p>
 <div class="flex items-baseline gap-2">
-<span class="font-headline-md text-headline-md text-on-surface">5</span>
+<span id="metricSick" class="font-headline-md text-headline-md text-on-surface">0</span>
 <span class="font-body-sm text-body-sm text-on-surface-variant">Days</span>
 </div>
 <div class="mt-4 flex items-center gap-1 font-label-caps text-label-caps text-on-surface-variant">
@@ -209,7 +209,7 @@
 </div>
 <p class="font-body-sm text-body-sm text-secondary mb-2">Pending Requests</p>
 <div class="flex items-baseline gap-2">
-<span class="font-headline-md text-headline-md text-on-surface">1</span>
+<span id="metricPending" class="font-headline-md text-headline-md text-on-surface">0</span>
 <span class="font-body-sm text-body-sm text-on-surface-variant">Request</span>
 </div>
 <div class="mt-4 flex items-center gap-1 font-label-caps text-label-caps text-secondary">
@@ -224,7 +224,7 @@
 </div>
 <p class="font-body-sm text-body-sm text-secondary mb-2">Total Days Used</p>
 <div class="flex items-baseline gap-2">
-<span class="font-headline-md text-headline-md text-on-surface">8</span>
+<span id="metricUsed" class="font-headline-md text-headline-md text-on-surface">0</span>
 <span class="font-body-sm text-body-sm text-on-surface-variant">Days</span>
 </div>
 <div class="mt-4 flex items-center gap-1 font-label-caps text-label-caps text-on-surface-variant">

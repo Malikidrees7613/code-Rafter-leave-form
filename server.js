@@ -1,17 +1,17 @@
-// http://localhost:3000
 const app = require("./app");
+const env = require("./config/env");
+const connectDB = require("./db/connectDB");
 
-const PORT = 3000;
 const start = async () => {
     try {
-        app.listen(PORT, () => {
-            console.log(`Server is running on port ${PORT}`);
+        await connectDB();
+        app.listen(env.port, () => {
+            console.log(`Server is running on port ${env.port}`);
         });
-
     } catch (error) {
-        console.log("Error starting server", err);
+        console.error("Error starting server:", error);
+        process.exit(1);
     }
-}
-
+};
 
 start();
