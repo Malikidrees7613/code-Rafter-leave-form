@@ -1,0 +1,7 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(node \"C:/Users/Malik Idrees/AppData/Local/Temp/cr_check_admin.js\" \"verify-admin-1786346903@example.com\")"
+    ]
+  }
+}

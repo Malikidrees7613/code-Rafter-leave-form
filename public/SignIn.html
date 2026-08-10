@@ -163,6 +163,18 @@
                     </button>
                 </div>
             </form>
+            <!-- Admin Portal Link -->
+            <div id="adminPortalRow" class="pt-4">
+                <div class="flex items-center gap-3 mb-4">
+                    <div class="flex-1 h-px bg-outline-variant/50"></div>
+                    <span class="font-label-caps text-label-caps text-secondary">or</span>
+                    <div class="flex-1 h-px bg-outline-variant/50"></div>
+                </div>
+                <button id="adminPortalBtn" type="button" class="w-full flex justify-center items-center gap-2 py-3 px-4 border border-outline-variant rounded-lg shadow-sm font-body-base text-body-base font-medium text-secondary bg-surface-container-lowest hover:bg-surface-container-low hover:text-primary focus:outline-none focus:ring-2 focus:ring-offset-1 focus:ring-primary transition-all duration-200 active:scale-[0.98]">
+                    <span class="material-symbols-outlined text-xl">shield_person</span>
+                    Admin Portal
+                </button>
+            </div>
             <!-- Forgot Password Flow -->
             <div id="forgotSection" class="space-y-6 hidden">
                 <div class="text-center lg:text-left space-y-3">
@@ -220,6 +232,7 @@
 (function () {
     var loginForm = document.getElementById('loginForm');
     var authMessage = document.getElementById('authMessage');
+    var adminPortalRow = document.getElementById('adminPortalRow');
     var forgotSection = document.getElementById('forgotSection');
     var forgotStepEmail = document.getElementById('forgotStepEmail');
     var forgotStepReset = document.getElementById('forgotStepReset');
@@ -236,11 +249,13 @@
     function showLogin() {
         loginForm.classList.remove('hidden');
         forgotSection.classList.add('hidden');
+        adminPortalRow.classList.remove('hidden');
         authMessage.classList.remove('hidden');
     }
     function showForgot() {
         loginForm.classList.add('hidden');
         forgotSection.classList.remove('hidden');
+        adminPortalRow.classList.add('hidden');
         authMessage.classList.add('hidden');
     }
 
@@ -266,10 +281,21 @@
             var data = await api('/api/auth/login', { email: email, password: password });
             localStorage.setItem('cr_token', data.token);
             localStorage.setItem('cr_user', JSON.stringify(data.user));
-            window.location.href = 'EmployeeDashboard.html';
+            window.location.href = data.user.role === 'admin' ? 'AdminDashboard.html' : 'EmployeeDashboard.html';
         } catch (err) {
             showMessage(err.message, 'error');
             busy = false;
+        }
+    });
+
+    document.getElementById('adminPortalBtn').addEventListener('click', function () {
+        var stored = localStorage.getItem('cr_token');
+        var storedUser = JSON.parse(localStorage.getItem('cr_user') || 'null');
+        if (stored && storedUser && storedUser.role === 'admin') {
+            window.location.href = 'AdminDashboard.html';
+        } else {
+            showMessage('Admin access only. Please sign in with an admin account first.', 'error');
+            document.getElementById('email').focus();
         }
     });
 
