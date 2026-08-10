@@ -28,7 +28,7 @@ const signToken = (user) =>
         expiresIn: jwtConfig.expiresIn,
     });
 
-// Matches the default JWT_EXPIRES_IN of 7 days so the cookie and token expire together.
+
 const cookieMaxAge = 7 * 24 * 60 * 60 * 1000;
 
 const register = async (req, res) => {
