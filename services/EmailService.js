@@ -4,54 +4,52 @@ const sgMail = require("@sendgrid/mail");
 const config = require("../config/env");
 
 if (config.sendgrid.apiKey) {
-    sgMail.setApiKey(config.sendgrid.apiKey);
+  sgMail.setApiKey(config.sendgrid.apiKey);
 }
 
 const otpTemplate = fs.readFileSync(path.join(__dirname, "..", "public", "emails", "otpEmail.html"), "utf8");
 
-// Replaces placeholders safely (function form avoids interpreting $ patterns in values).
 const render = (template, values) =>
-    template.replace(/\{\{\s*(\w+)\s*\}\}/g, (match, key) => values[key] ?? match);
+  template.replace(/\{\{\s*(\w+)\s*\}\}/g, (match, key) => values[key] ?? match);
 
 const renderOtpEmail = ({ name, title, message, code }) =>
-    render(otpTemplate, { title, message, code, appUrl: config.appUrl });
+  render(otpTemplate, { title, message, code, appUrl: config.appUrl });
 
-// Sends an email via SendGrid. When no API key is configured, logs the message
-// to the console so the auth flow stays testable in development.
+
 const sendEmail = async ({ to, subject, html }) => {
-    if (!config.sendgrid.apiKey) {
-        console.log("\n[DEV EMAIL] To:", to);
-        console.log("[DEV EMAIL] Subject:", subject);
-        console.log(`[DEV EMAIL] Body:\n${html}\n`);
-        return { dev: true, to, subject };
-    }
+  if (!config.sendgrid.apiKey) {
+    console.log("\n[DEV EMAIL] To:", to);
+    console.log("[DEV EMAIL] Subject:", subject);
+    console.log(`[DEV EMAIL] Body:\n${html}\n`);
+    return { dev: true, to, subject };
+  }
 
-    return sgMail.send({
-        from: { email: config.sendgrid.from, name: "Code Rafters" },
-        to,
-        subject,
-        html,
-    });
+  return sgMail.send({
+    from: { email: config.sendgrid.from, name: "Code Rafters" },
+    to,
+    subject,
+    html,
+  });
 };
 
 const sendVerificationEmail = ({ email, name, code }) => {
-    const html = renderOtpEmail({
-        name,
-        title: `Hi ${name}, please verify your email`,
-        message: "Welcome to Code Rafters. Confirm your email address to activate your account.",
-        code,
-    });
-    return sendEmail({ to: email, subject: "Verify your Code Rafters account", html });
+  const html = renderOtpEmail({
+    name,
+    title: `Hi ${name}, please verify your email`,
+    message: "Welcome to Code Rafters. Confirm your email address to activate your account.",
+    code,
+  });
+  return sendEmail({ to: email, subject: "Verify your Code Rafters account", html });
 };
 
 const sendPasswordResetEmail = ({ email, name, code }) => {
-    const html = renderOtpEmail({
-        name,
-        title: `Hi ${name}, reset your password`,
-        message: "We received a request to reset your password. Use the code below to set a new one.",
-        code,
-    });
-    return sendEmail({ to: email, subject: "Reset your Code Rafters password", html });
+  const html = renderOtpEmail({
+    name,
+    title: `Hi ${name}, reset your password`,
+    message: "We received a request to reset your password. Use the code below to set a new one.",
+    code,
+  });
+  return sendEmail({ to: email, subject: "Reset your Code Rafters password", html });
 };
 
 const leaveBaseLayout = (title, bodyHtml) => `
@@ -89,28 +87,28 @@ const leaveBaseLayout = (title, bodyHtml) => `
 `;
 
 const sendLeaveStatusEmail = ({ email, name, leave }) => {
-    const labels = {
-        annual: "Annual Leave",
-        sick: "Sick Leave",
-        personal: "Personal Leave",
-        unpaid: "Unpaid Leave",
-    };
-    const statusColor = leave.status === "approved" ? "#0b7a3b" : leave.status === "rejected" ? "#ba1a1a" : "#505f76";
-    const html = leaveBaseLayout(
-        `Hi ${name}, your leave request was ${leave.status}`,
-        `<p style="margin:0 0 16px;font-size:14px;color:#505f76;line-height:1.6;">Your request below has been <strong style="color:${statusColor};">${leave.status}</strong>.</p>
+  const labels = {
+    annual: "Annual Leave",
+    sick: "Sick Leave",
+    personal: "Personal Leave",
+    unpaid: "Unpaid Leave",
+  };
+  const statusColor = leave.status === "approved" ? "#0b7a3b" : leave.status === "rejected" ? "#ba1a1a" : "#505f76";
+  const html = leaveBaseLayout(
+    `Hi ${name}, your leave request was ${leave.status}`,
+    `<p style="margin:0 0 16px;font-size:14px;color:#505f76;line-height:1.6;">Your request below has been <strong style="color:${statusColor};">${leave.status}</strong>.</p>
         <table role="presentation" width="100%" cellpadding="0" cellspacing="0" style="background-color:#f7f9fb;border:1px solid #e0e3e5;border-radius:6px;font-size:14px;color:#191c1e;">
           <tr><td style="padding:12px 16px;"><strong>Leave type</strong></td><td style="padding:12px 16px;">${labels[leave.leaveType] || leave.leaveType}</td></tr>
           <tr><td style="padding:12px 16px;border-top:1px solid #e0e3e5;"><strong>Dates</strong></td><td style="padding:12px 16px;border-top:1px solid #e0e3e5;">${new Date(leave.startDate).toLocaleDateString()} - ${new Date(leave.endDate).toLocaleDateString()}</td></tr>
           <tr><td style="padding:12px 16px;border-top:1px solid #e0e3e5;"><strong>Duration</strong></td><td style="padding:12px 16px;border-top:1px solid #e0e3e5;">${leave.duration} day(s)</td></tr>
           ${leave.reviewNote ? `<tr><td style="padding:12px 16px;border-top:1px solid #e0e3e5;"><strong>Note</strong></td><td style="padding:12px 16px;border-top:1px solid #e0e3e5;">${leave.reviewNote}</td></tr>` : ""}
         </table>`
-    );
-    return sendEmail({ to: email, subject: `Your leave request was ${leave.status}`, html });
+  );
+  return sendEmail({ to: email, subject: `Your leave request was ${leave.status}`, html });
 };
 
 module.exports = {
-    sendVerificationEmail,
-    sendPasswordResetEmail,
-    sendLeaveStatusEmail,
+  sendVerificationEmail,
+  sendPasswordResetEmail,
+  sendLeaveStatusEmail,
 };

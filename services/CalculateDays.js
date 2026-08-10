@@ -5,10 +5,9 @@ const parseDate = (value) => {
     return Number.isNaN(date.getTime()) ? null : date;
 };
 
-// Normalize to local midnight so day arithmetic is not affected by time-of-day input.
 const startOfDay = (date) => new Date(date.getFullYear(), date.getMonth(), date.getDate());
 
-// Inclusive count of calendar days between two dates. Returns 0 for invalid input.
+
 const calculateDays = (startDate, endDate) => {
     const start = parseDate(startDate);
     const end = parseDate(endDate);
@@ -21,7 +20,6 @@ const calculateDays = (startDate, endDate) => {
     return Math.round((endDay - startDay) / MILLIS_PER_DAY) + 1;
 };
 
-// Inclusive count of working days (Mon-Fri) between two dates. Returns 0 for invalid input.
 const countWorkingDays = (startDate, endDate) => {
     const start = parseDate(startDate);
     const end = parseDate(endDate);
