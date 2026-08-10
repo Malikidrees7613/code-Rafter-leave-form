@@ -25,9 +25,13 @@ const protectedPages = [
     "Settings.html",
 ];
 protectedPages.forEach((page) => {
-    app.get(`/${page}`, protectPage, (req, res) => {
+    app.get(`/${page}`, protectPage(), (req, res) => {
         res.sendFile(path.join(__dirname, "public", page));
     });
+});
+
+app.get("/AdminDashboard.html", protectPage("admin"), (req, res) => {
+    res.sendFile(path.join(__dirname, "public", "AdminDashboard.html"));
 });
 
 app.use(express.static(path.join(__dirname, "public")));

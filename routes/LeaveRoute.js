@@ -10,6 +10,7 @@ router.use(protect);
 router.post("/", uploadAttachment, leaveController.createLeave);
 router.get("/", leaveController.getMyLeaves);
 router.get("/all", restrictTo("admin"), leaveController.getAllLeaves);
+router.get("/stats", restrictTo("admin"), leaveController.getLeaveStats);
 router.get("/:id", leaveController.getLeaveById);
 router.patch("/:id/status", restrictTo("admin"), leaveController.updateLeaveStatus);
 router.patch("/:id/cancel", leaveController.cancelLeave);

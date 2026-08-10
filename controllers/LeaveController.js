@@ -86,6 +86,18 @@ const getAllLeaves = async (req, res) => {
     res.json({ results: leaves.length, total, page, pages: Math.ceil(total / limit), leaves });
 };
 
+const getLeaveStats = async (req, res) => {
+    const [total, pending, approved, rejected, cancelled] = await Promise.all([
+        LeaveForm.countDocuments({}),
+        LeaveForm.countDocuments({ status: "pending" }),
+        LeaveForm.countDocuments({ status: "approved" }),
+        LeaveForm.countDocuments({ status: "rejected" }),
+        LeaveForm.countDocuments({ status: "cancelled" }),
+    ]);
+
+    res.json({ total, pending, approved, rejected, cancelled });
+};
+
 const getLeaveById = async (req, res) => {
     const leave = await LeaveForm.findById(req.params.id).populate("user", "fullName email employeeId");
     if (!leave) {
@@ -182,6 +194,7 @@ module.exports = {
     createLeave,
     getMyLeaves,
     getAllLeaves,
+    getLeaveStats,
     getLeaveById,
     updateLeaveStatus,
     cancelLeave,

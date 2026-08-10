@@ -161,6 +161,10 @@
 <span class="material-symbols-outlined" data-icon="settings">settings</span>
 <span class="font-body-base text-body-base">Settings</span>
 </a>
+<a id="adminLink" class="hidden items-center gap-3 px-4 py-3 text-secondary dark:text-secondary-fixed-dim hover:bg-surface-container-high transition-colors transition-all duration-200 ease-in-out rounded-r-lg border-l-4 border-transparent hover:border-outline-variant" href="AdminDashboard.html">
+<span class="material-symbols-outlined" data-icon="shield_person">shield_person</span>
+<span class="font-body-base text-body-base">Admin Portal</span>
+</a>
 </nav>
 </aside>
 <!-- Main Content Area -->
@@ -296,6 +300,12 @@
     function render() {
         var firstName = (user.fullName || '').split(' ')[0] || '';
         document.getElementById('welcomeName').textContent = 'Welcome back, ' + firstName;
+
+        var adminLink = document.getElementById('adminLink');
+        if (user.role === 'admin') {
+            adminLink.classList.remove('hidden');
+            adminLink.classList.add('flex');
+        }
 
         var balance = user.leaveBalance || {};
         document.getElementById('metricAnnual').textContent = balance.annual != null ? balance.annual : '0';

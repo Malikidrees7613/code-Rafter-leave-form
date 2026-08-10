@@ -1,0 +1,458 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Code Rafters - Admin Dashboard</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&amp;family=JetBrains+Mono:wght@500&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "tertiary-fixed": "#ffdbcc",
+                        "outline-variant": "#c7c4d8",
+                        "surface-tint": "#4d44e3",
+                        "primary-container": "#4f46e5",
+                        "background": "#f7f9fb",
+                        "on-secondary-container": "#54647a",
+                        "tertiary-fixed-dim": "#ffb695",
+                        "primary-fixed": "#e2dfff",
+                        "outline": "#777587",
+                        "primary-fixed-dim": "#c3c0ff",
+                        "secondary-container": "#d0e1fb",
+                        "surface-container-high": "#e6e8ea",
+                        "on-primary": "#ffffff",
+                        "on-surface": "#191c1e",
+                        "on-primary-fixed": "#0f0069",
+                        "tertiary": "#7e3000",
+                        "inverse-surface": "#2d3133",
+                        "surface": "#f7f9fb",
+                        "surface-variant": "#e0e3e5",
+                        "surface-container-lowest": "#ffffff",
+                        "secondary": "#505f76",
+                        "surface-container-low": "#f2f4f6",
+                        "on-tertiary-fixed": "#351000",
+                        "on-primary-fixed-variant": "#3323cc",
+                        "on-secondary": "#ffffff",
+                        "surface-bright": "#f7f9fb",
+                        "on-error": "#ffffff",
+                        "primary": "#3525cd",
+                        "secondary-fixed": "#d3e4fe",
+                        "inverse-on-surface": "#eff1f3",
+                        "surface-container": "#eceef0",
+                        "surface-dim": "#d8dadc",
+                        "on-background": "#191c1e",
+                        "on-error-container": "#93000a",
+                        "error": "#ba1a1a",
+                        "on-surface-variant": "#464555",
+                        "on-tertiary-container": "#ffd2be",
+                        "on-primary-container": "#dad7ff",
+                        "error-container": "#ffdad6",
+                        "tertiary-container": "#a44100",
+                        "on-tertiary-fixed-variant": "#7b2f00",
+                        "secondary-fixed-dim": "#b7c8e1",
+                        "on-tertiary": "#ffffff",
+                        "surface-container-highest": "#e0e3e5",
+                        "on-secondary-fixed-variant": "#38485d",
+                        "on-secondary-fixed": "#0b1c30",
+                        "inverse-primary": "#c3c0ff"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "0.125rem",
+                        "lg": "0.25rem",
+                        "xl": "0.5rem",
+                        "full": "0.75rem"
+                    },
+                    "spacing": {
+                        "gutter": "24px",
+                        "sidebar-width": "280px",
+                        "margin-desktop": "32px",
+                        "base-unit": "4px",
+                        "margin-mobile": "16px",
+                        "container-max": "1440px"
+                    },
+                    "fontFamily": {
+                        "headline-md": ["Inter"],
+                        "body-base": ["Inter"],
+                        "display-lg": ["Inter"],
+                        "label-caps": ["JetBrains Mono"],
+                        "body-sm": ["Inter"],
+                        "display-lg-mobile": ["Inter"],
+                        "headline-sm": ["Inter"]
+                    },
+                    "fontSize": {
+                        "headline-md": ["24px", { "lineHeight": "32px", "letterSpacing": "-0.01em", "fontWeight": "600" }],
+                        "body-base": ["16px", { "lineHeight": "24px", "fontWeight": "400" }],
+                        "display-lg": ["36px", { "lineHeight": "44px", "letterSpacing": "-0.02em", "fontWeight": "700" }],
+                        "label-caps": ["12px", { "lineHeight": "16px", "letterSpacing": "0.05em", "fontWeight": "500" }],
+                        "body-sm": ["14px", { "lineHeight": "20px", "fontWeight": "400" }],
+                        "display-lg-mobile": ["28px", { "lineHeight": "34px", "fontWeight": "700" }],
+                        "headline-sm": ["18px", { "lineHeight": "28px", "fontWeight": "600" }]
+                    }
+                }
+            }
+        }
+    </script>
+</head>
+<body class="bg-background text-on-background font-body-base antialiased min-h-screen selection:bg-primary selection:text-on-primary overflow-x-hidden">
+<!-- TopNavBar -->
+<nav class="bg-surface/80 dark:bg-inverse-surface/80 backdrop-blur-md fixed top-0 right-0 z-40 h-16 border-b border-outline-variant dark:border-outline shadow-sm flex justify-between items-center px-gutter ml-sidebar-width w-[calc(100%-280px)] hidden md:flex">
+<div class="flex items-center gap-4">
+<span class="font-headline-sm text-headline-sm font-bold text-primary dark:text-inverse-primary tracking-tight">Code Rafters</span>
+</div>
+<div class="flex items-center gap-6">
+<div class="flex items-center gap-2">
+<span class="px-3 py-1 rounded-full bg-primary-container/15 text-primary font-label-caps text-label-caps">Admin</span>
+<button id="logoutBtn" class="p-2 text-on-surface-variant dark:text-surface-variant hover:bg-surface-container-high rounded-full transition-colors" title="Log out">
+<span class="material-symbols-outlined" data-icon="logout">logout</span>
+</button>
+</div>
+</div>
+</nav>
+<!-- SideNavBar -->
+<aside class="fixed left-0 top-0 h-full w-sidebar-width bg-surface dark:bg-inverse-surface border-r border-outline-variant dark:border-outline shadow-sm z-50 flex flex-col h-full py-gutter hidden md:flex">
+<div class="px-6 mb-8 flex items-center gap-4">
+<div class="w-10 h-10 rounded-lg bg-primary-container flex items-center justify-center">
+<span class="material-symbols-outlined text-on-primary" data-icon="shield_person">shield_person</span>
+</div>
+<div>
+<h1 class="font-headline-sm text-headline-sm font-bold text-primary dark:text-inverse-primary">Code Rafters</h1>
+<p class="font-body-sm text-body-sm text-secondary">Admin Portal</p>
+</div>
+</div>
+<nav class="flex-1 px-2 space-y-1 overflow-y-auto">
+<a class="flex items-center gap-3 px-4 py-3 border-l-4 border-primary bg-secondary-container/30 text-primary font-bold transition-all duration-200 ease-in-out rounded-r-lg" href="AdminDashboard.html">
+<span class="material-symbols-outlined" data-icon="approval">approval</span>
+<span class="font-body-base text-body-base">Requests</span>
+</a>
+<a class="flex items-center gap-3 px-4 py-3 text-secondary dark:text-secondary-fixed-dim hover:bg-surface-container-high transition-colors transition-all duration-200 ease-in-out rounded-r-lg border-l-4 border-transparent hover:border-outline-variant" href="EmployeeDashboard.html">
+<span class="material-symbols-outlined" data-icon="badge">badge</span>
+<span class="font-body-base text-body-base">Employee Portal</span>
+</a>
+</nav>
+</aside>
+<!-- Main Content Area -->
+<main class="md:ml-sidebar-width pt-16 md:pt-24 min-h-screen px-margin-mobile md:px-margin-desktop pb-12 transition-all duration-300">
+<div class="max-w-container-max mx-auto">
+<!-- Header -->
+<header class="mb-8 flex flex-col md:flex-row md:items-end justify-between gap-4">
+<div>
+<h2 class="font-display-lg-mobile md:font-display-lg text-display-lg-mobile md:text-display-lg text-on-background mb-2">Admin Dashboard</h2>
+<p class="font-body-base text-body-base text-secondary">Review and manage all leave requests.</p>
+</div>
+</header>
+<!-- Metrics Bento Grid -->
+<section class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-gutter mb-8">
+<div class="bg-surface-container-lowest border border-outline-variant rounded-xl p-6 shadow-sm">
+<p class="font-body-sm text-body-sm text-secondary mb-2">Total Requests</p>
+<div class="flex items-baseline gap-2">
+<span id="statTotal" class="font-headline-md text-headline-md text-on-surface">0</span>
+<span class="font-body-sm text-body-sm text-on-surface-variant">Requests</span>
+</div>
+</div>
+<div class="bg-surface-container-lowest border border-outline-variant rounded-xl p-6 shadow-sm">
+<p class="font-body-sm text-body-sm text-secondary mb-2">Pending</p>
+<div class="flex items-baseline gap-2">
+<span id="statPending" class="font-headline-md text-headline-md text-on-surface">0</span>
+<span class="font-body-sm text-body-sm text-on-surface-variant">Awaiting review</span>
+</div>
+</div>
+<div class="bg-surface-container-lowest border border-outline-variant rounded-xl p-6 shadow-sm">
+<p class="font-body-sm text-body-sm text-secondary mb-2">Approved</p>
+<div class="flex items-baseline gap-2">
+<span id="statApproved" class="font-headline-md text-headline-md text-on-surface">0</span>
+<span class="font-body-sm text-body-sm text-on-surface-variant">Approved</span>
+</div>
+</div>
+<div class="bg-surface-container-lowest border border-outline-variant rounded-xl p-6 shadow-sm">
+<p class="font-body-sm text-body-sm text-secondary mb-2">Rejected</p>
+<div class="flex items-baseline gap-2">
+<span id="statRejected" class="font-headline-md text-headline-md text-on-surface">0</span>
+<span class="font-body-sm text-body-sm text-on-surface-variant">Rejected</span>
+</div>
+</div>
+</section>
+<!-- Requests Table -->
+<section class="bg-surface-container-lowest border border-outline-variant rounded-xl shadow-sm overflow-hidden">
+<div class="p-6 border-b border-outline-variant flex flex-col md:flex-row md:items-center justify-between gap-4 bg-surface-bright">
+<h3 class="font-headline-sm text-headline-sm text-on-surface">Leave Requests</h3>
+<div id="filterTabs" class="flex flex-wrap items-center gap-2">
+<button class="filter-tab font-label-caps text-label-caps px-3 py-1.5 rounded-full transition-colors" data-status="">All</button>
+<button class="filter-tab font-label-caps text-label-caps px-3 py-1.5 rounded-full transition-colors" data-status="pending">Pending</button>
+<button class="filter-tab font-label-caps text-label-caps px-3 py-1.5 rounded-full transition-colors" data-status="approved">Approved</button>
+<button class="filter-tab font-label-caps text-label-caps px-3 py-1.5 rounded-full transition-colors" data-status="rejected">Rejected</button>
+<button class="filter-tab font-label-caps text-label-caps px-3 py-1.5 rounded-full transition-colors" data-status="cancelled">Cancelled</button>
+</div>
+</div>
+<div class="overflow-x-auto">
+<table class="w-full text-left border-collapse">
+<thead>
+<tr class="bg-surface-container-low border-b border-outline-variant font-label-caps text-label-caps text-secondary">
+<th class="p-4 font-medium">Employee</th>
+<th class="p-4 font-medium">Leave Type</th>
+<th class="p-4 font-medium">Start Date</th>
+<th class="p-4 font-medium">End Date</th>
+<th class="p-4 font-medium">Duration</th>
+<th class="p-4 font-medium">Reason</th>
+<th class="p-4 font-medium">Attachment</th>
+<th class="p-4 font-medium">Status</th>
+<th class="p-4 font-medium">Note</th>
+<th class="p-4 font-medium text-right">Actions</th>
+</tr>
+</thead>
+<tbody id="requestsBody" class="font-body-sm text-body-sm text-on-surface"></tbody>
+</table>
+</div>
+<!-- Pagination -->
+<div class="p-4 border-t border-outline-variant flex items-center justify-between gap-4 bg-surface-bright">
+<p id="pageInfo" class="font-body-sm text-body-sm text-secondary">Loading...</p>
+<div class="flex items-center gap-2">
+<button id="prevBtn" class="font-label-caps text-label-caps px-3 py-1.5 rounded-lg border border-outline-variant text-secondary hover:bg-surface-container-high transition-colors disabled:opacity-40 disabled:cursor-not-allowed" disabled>Prev</button>
+<button id="nextBtn" class="font-label-caps text-label-caps px-3 py-1.5 rounded-lg border border-outline-variant text-secondary hover:bg-surface-container-high transition-colors disabled:opacity-40 disabled:cursor-not-allowed" disabled>Next</button>
+</div>
+</div>
+</section>
+</div>
+</main>
+<!-- Review Modal -->
+<div id="reviewModal" class="hidden fixed inset-0 z-50 flex items-center justify-center p-4">
+<div class="absolute inset-0 bg-black/40" data-modal-close></div>
+<div class="relative bg-surface-container-lowest border border-outline-variant rounded-xl shadow-lg w-full max-w-md p-6">
+<h3 id="reviewTitle" class="font-headline-sm text-headline-sm text-on-surface mb-1">Review request</h3>
+<p id="reviewSubtitle" class="font-body-sm text-body-sm text-secondary mb-4"></p>
+<label class="font-label-caps text-label-caps text-secondary block mb-1" for="reviewNote">Review note (optional)</label>
+<textarea id="reviewNote" class="w-full border border-outline-variant rounded-lg p-3 font-body-sm text-body-sm text-on-surface bg-surface-container-low focus:border-primary focus:ring-1 focus:ring-primary outline-none resize-none" rows="3" placeholder="Add a note to include in the email..."></textarea>
+<div class="mt-5 flex items-center justify-end gap-3">
+<button data-modal-close class="font-label-caps text-label-caps px-4 py-2 rounded-lg border border-outline-variant text-secondary hover:bg-surface-container-high transition-colors">Cancel</button>
+<button id="confirmReviewBtn" class="font-label-caps text-label-caps px-4 py-2 rounded-lg text-on-primary hover:opacity-90 transition-colors">Confirm</button>
+</div>
+</div>
+</div>
+<script>
+(function () {
+    var token = localStorage.getItem('cr_token');
+    if (!token) { window.location.replace('SignIn.html'); return; }
+
+    var user = JSON.parse(localStorage.getItem('cr_user') || 'null');
+    if (!user || user.role !== 'admin') { window.location.replace('EmployeeDashboard.html'); return; }
+
+    var state = { status: '', page: 1, pages: 1, total: 0 };
+    var reviewAction = null;
+    var reviewLeave = null;
+
+    function authHeaders() {
+        return { 'Authorization': 'Bearer ' + token, 'Content-Type': 'application/json' };
+    }
+    async function api(url, options) {
+        var res = await fetch(url, Object.assign({ headers: authHeaders() }, options || {}));
+        var data = await res.json().catch(function () { return {}; });
+        if (!res.ok) throw new Error(data.message || 'Request failed.');
+        return data;
+    }
+
+    var TYPE_LABELS = { annual: 'Annual Leave', sick: 'Sick Leave', personal: 'Personal Leave', unpaid: 'Unpaid Leave' };
+    var TYPE_ICONS = { annual: 'flight_takeoff', sick: 'medical_services', personal: 'person', unpaid: 'payments' };
+    var STATUS_STYLES = {
+        approved: 'bg-surface-tint/10 text-primary',
+        pending: 'bg-surface-variant text-on-surface-variant',
+        rejected: 'bg-error-container text-on-error-container',
+        cancelled: 'bg-surface-container-high text-on-surface-variant'
+    };
+
+    function esc(s) {
+        return String(s == null ? '' : s).replace(/[&<>"']/g, function (c) {
+            return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c];
+        });
+    }
+
+    function formatDate(d) {
+        return new Date(d).toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' });
+    }
+
+    function setTabStyles() {
+        document.querySelectorAll('.filter-tab').forEach(function (btn) {
+            var active = btn.getAttribute('data-status') === state.status;
+            btn.className = 'filter-tab font-label-caps text-label-caps px-3 py-1.5 rounded-full transition-colors ' +
+                (active ? 'bg-primary text-on-primary' : 'bg-surface-container-low text-secondary hover:bg-surface-container-high');
+        });
+    }
+
+    function renderStats(stats) {
+        document.getElementById('statTotal').textContent = stats.total != null ? stats.total : 0;
+        document.getElementById('statPending').textContent = stats.pending != null ? stats.pending : 0;
+        document.getElementById('statApproved').textContent = stats.approved != null ? stats.approved : 0;
+        document.getElementById('statRejected').textContent = stats.rejected != null ? stats.rejected : 0;
+    }
+
+    function renderTable(leaves) {
+        var tbody = document.getElementById('requestsBody');
+        tbody.innerHTML = '';
+        if (!leaves.length) {
+            tbody.innerHTML = '<tr><td colspan="10" class="p-6 text-center text-secondary">No leave requests found.</td></tr>';
+            return;
+        }
+        leaves.forEach(function (leave) {
+            var emp = leave.user || {};
+            var name = emp.fullName || 'Unknown';
+            var empId = emp.employeeId || '—';
+            var attachment = leave.attachment && leave.attachment.path
+                ? '<a href="' + esc(leave.attachment.path) + '" target="_blank" rel="noopener" class="inline-flex items-center gap-1 text-primary hover:underline font-label-caps text-label-caps">' +
+                  '<span class="material-symbols-outlined text-sm" data-icon="attach_file">attach_file</span>' + esc(leave.attachment.filename || 'View') + '</a>'
+                : '<span class="text-on-surface-variant">—</span>';
+
+            var actions;
+            if (leave.status === 'pending') {
+                actions = '<div class="flex items-center justify-end gap-2">' +
+                    '<button data-review="' + leave._id + '" data-action="approved" class="font-label-caps text-label-caps px-3 py-1.5 rounded-lg bg-surface-tint/10 text-primary hover:bg-surface-tint/20 transition-colors">Approve</button>' +
+                    '<button data-review="' + leave._id + '" data-action="rejected" class="font-label-caps text-label-caps px-3 py-1.5 rounded-lg bg-error-container text-on-error-container hover:opacity-80 transition-colors">Reject</button>' +
+                    '</div>';
+            } else if (leave.reviewedAt) {
+                actions = '<span class="text-on-surface-variant">' + formatDate(leave.reviewedAt) + '</span>';
+            } else {
+                actions = '<span class="text-on-surface-variant">—</span>';
+            }
+
+            var tr = document.createElement('tr');
+            tr.className = 'border-b border-outline-variant hover:bg-surface-container-low/50 transition-colors';
+            tr.innerHTML =
+                '<td class="p-4"><div class="flex items-center gap-3">' +
+                '<div class="w-8 h-8 rounded bg-primary-container/20 flex items-center justify-center text-primary">' +
+                '<span class="material-symbols-outlined text-sm">person</span></div>' +
+                '<div><div class="font-medium">' + esc(name) + '</div>' +
+                '<div class="text-label-caps text-on-surface-variant">' + esc(empId) + '</div></div></div></td>' +
+                '<td class="p-4"><div class="flex items-center gap-2">' +
+                '<span class="material-symbols-outlined text-sm text-primary">' + (TYPE_ICONS[leave.leaveType] || 'event') + '</span>' +
+                '<span>' + (TYPE_LABELS[leave.leaveType] || esc(leave.leaveType)) + '</span></div></td>' +
+                '<td class="p-4 text-secondary">' + formatDate(leave.startDate) + '</td>' +
+                '<td class="p-4 text-secondary">' + formatDate(leave.endDate) + '</td>' +
+                '<td class="p-4 text-secondary">' + (leave.duration || 0) + ' Day' + (leave.duration === 1 ? '' : 's') + '</td>' +
+                '<td class="p-4 text-secondary max-w-[220px] truncate" title="' + esc(leave.reason) + '">' + (esc(leave.reason) || '—') + '</td>' +
+                '<td class="p-4">' + attachment + '</td>' +
+                '<td class="p-4"><span class="inline-flex items-center px-2 py-1 rounded font-label-caps text-label-caps ' + (STATUS_STYLES[leave.status] || '') + '">' +
+                leave.status.charAt(0).toUpperCase() + leave.status.slice(1) + '</span></td>' +
+                '<td class="p-4 text-secondary max-w-[180px] truncate" title="' + esc(leave.reviewNote) + '">' + (esc(leave.reviewNote) || '—') + '</td>' +
+                '<td class="p-4 text-right">' + actions + '</td>';
+            tbody.appendChild(tr);
+        });
+
+        tbody.querySelectorAll('[data-review]').forEach(function (btn) {
+            btn.addEventListener('click', function () {
+                openReviewModal(btn.getAttribute('data-review'), btn.getAttribute('data-action'));
+            });
+        });
+    }
+
+    function renderPagination() {
+        document.getElementById('pageInfo').textContent = state.total
+            ? 'Page ' + state.page + ' of ' + state.pages + ' (' + state.total + ' request' + (state.total === 1 ? '' : 's') + ')'
+            : 'No requests';
+        document.getElementById('prevBtn').disabled = state.page <= 1;
+        document.getElementById('nextBtn').disabled = state.page >= state.pages || state.pages === 0;
+    }
+
+    async function loadStats() {
+        try {
+            var data = await api('/api/leave/stats');
+            renderStats(data);
+        } catch (err) {
+            if (isAuthError(err)) { signOut(); } else { window.alert(err.message); }
+        }
+    }
+
+    async function loadLeaves() {
+        try {
+            var qs = '?page=' + state.page + '&limit=10' + (state.status ? '&status=' + state.status : '');
+            var data = await api('/api/leave/all' + qs);
+            state.page = data.page;
+            state.pages = data.pages;
+            state.total = data.total;
+            renderTable(data.leaves || []);
+            renderPagination();
+        } catch (err) {
+            if (isAuthError(err)) { signOut(); } else { window.alert(err.message); }
+        }
+    }
+
+    function isAuthError(err) {
+        var m = (err.message || '').toLowerCase();
+        return m.indexOf('token') !== -1 || m.indexOf('log in') !== -1 || m.indexOf('permission') !== -1;
+    }
+
+    function openReviewModal(id, action) {
+        reviewAction = action;
+        reviewLeave = id;
+        var approve = action === 'approved';
+        document.getElementById('reviewTitle').textContent = approve ? 'Approve request' : 'Reject request';
+        document.getElementById('reviewSubtitle').textContent = approve
+            ? 'Approving will deduct the leave balance and notify the employee by email.'
+            : 'Rejecting will notify the employee by email.';
+        var btn = document.getElementById('confirmReviewBtn');
+        btn.textContent = approve ? 'Approve' : 'Reject';
+        btn.className = 'font-label-caps text-label-caps px-4 py-2 rounded-lg text-on-primary hover:opacity-90 transition-colors ' +
+            (approve ? 'bg-primary' : 'bg-error');
+        document.getElementById('reviewNote').value = '';
+        document.getElementById('reviewModal').classList.remove('hidden');
+    }
+
+    function closeReviewModal() {
+        document.getElementById('reviewModal').classList.add('hidden');
+        reviewAction = null;
+        reviewLeave = null;
+    }
+
+    async function submitReview() {
+        var btn = document.getElementById('confirmReviewBtn');
+        btn.disabled = true;
+        try {
+            var note = document.getElementById('reviewNote').value.trim();
+            await api('/api/leave/' + reviewLeave + '/status', {
+                method: 'PATCH',
+                body: JSON.stringify({ status: reviewAction, reviewNote: note })
+            });
+            closeReviewModal();
+            state.page = 1;
+            await Promise.all([loadStats(), loadLeaves()]);
+        } catch (err) {
+            window.alert(err.message);
+        } finally {
+            btn.disabled = false;
+        }
+    }
+
+    function signOut() {
+        fetch('/api/auth/logout', { method: 'POST' }).catch(function () {}).finally(function () {
+            localStorage.clear();
+            window.location.replace('SignIn.html');
+        });
+    }
+
+    document.querySelectorAll('.filter-tab').forEach(function (btn) {
+        btn.addEventListener('click', function () {
+            state.status = btn.getAttribute('data-status');
+            state.page = 1;
+            setTabStyles();
+            loadLeaves();
+        });
+    });
+    document.getElementById('prevBtn').addEventListener('click', function () {
+        if (state.page > 1) { state.page -= 1; loadLeaves(); }
+    });
+    document.getElementById('nextBtn').addEventListener('click', function () {
+        if (state.page < state.pages) { state.page += 1; loadLeaves(); }
+    });
+    document.getElementById('confirmReviewBtn').addEventListener('click', submitReview);
+    document.querySelectorAll('[data-modal-close]').forEach(function (el) {
+        el.addEventListener('click', closeReviewModal);
+    });
+    document.getElementById('logoutBtn').addEventListener('click', signOut);
+
+    setTabStyles();
+    loadStats();
+    loadLeaves();
+})();
+</script>
+</body></html>
