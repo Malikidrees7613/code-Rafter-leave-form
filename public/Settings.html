@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Settings - Code Rafters</title>
+<script src="https://cdn.tailwindcss.com"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+</head>
+<body class="bg-slate-100 text-slate-900 font-[Inter,sans-serif] antialiased min-h-screen">
+<!-- SideNavBar -->
+<aside class="fixed inset-y-0 left-0 w-64 bg-white border-r border-slate-200 hidden md:flex flex-col z-40">
+<div class="px-6 h-16 flex items-center gap-3 border-b border-slate-100 shrink-0">
+<div class="w-9 h-9 rounded bg-indigo-600 flex items-center justify-center text-white font-bold text-sm shrink-0">CR</div>
+<div>
+<p class="text-sm font-bold text-indigo-700 leading-tight">Code Rafters</p>
+<p class="text-xs text-slate-500">Employee Portal</p>
+</div>
+</div>
+<nav class="flex-1 px-3 py-4 space-y-1 overflow-y-auto">
+<a class="flex items-center gap-3 px-3 py-2.5 rounded-md text-sm text-slate-600 hover:bg-slate-100 hover:text-slate-900 transition-colors" href="EmployeeDashboard.html">
+<span class="material-symbols-outlined text-[20px]">dashboard</span>
+<span>Dashboard</span>
+</a>
+<a class="flex items-center gap-3 px-3 py-2.5 rounded-md text-sm text-slate-600 hover:bg-slate-100 hover:text-slate-900 transition-colors" href="MyRequests.html">
+<span class="material-symbols-outlined text-[20px]">assignment</span>
+<span>My Requests</span>
+</a>
+<a class="flex items-center gap-3 px-3 py-2.5 rounded-md text-sm text-slate-600 hover:bg-slate-100 hover:text-slate-900 transition-colors" href="Attendance.html">
+<span class="material-symbols-outlined text-[20px]">calendar_today</span>
+<span>Attendance</span>
+</a>
+<a class="flex items-center gap-3 px-3 py-2.5 rounded-md text-sm text-slate-600 hover:bg-slate-100 hover:text-slate-900 transition-colors" href="Profile.html">
+<span class="material-symbols-outlined text-[20px]">person</span>
+<span>Profile</span>
+</a>
+<a class="flex items-center gap-3 px-3 py-2.5 rounded-md text-sm font-semibold bg-indigo-50 text-indigo-700 border-l-4 border-indigo-600" href="Settings.html">
+<span class="material-symbols-outlined text-[20px]">settings</span>
+<span>Settings</span>
+</a>
+</nav>
+<div class="p-4 border-t border-slate-100 space-y-2 shrink-0">
+<a class="block w-full bg-indigo-600 hover:bg-indigo-700 text-white text-sm font-medium py-2.5 px-4 rounded-md text-center transition-colors" href="LeaveForm.html">
+<span class="material-symbols-outlined align-middle text-[18px] mr-1">add</span>Apply for Leave
+</a>
+<button id="logoutBtn" class="w-full text-slate-500 hover:text-slate-700 hover:bg-slate-100 text-sm py-2 px-4 rounded-md transition-colors" type="button">Log out</button>
+</div>
+</aside>
+<!-- TopNavBar (Mobile) -->
+<header class="md:hidden fixed top-0 inset-x-0 h-16 bg-white border-b border-slate-200 flex items-center justify-between px-4 z-40">
+<div class="flex items-center gap-2">
+<div class="w-8 h-8 rounded bg-indigo-600 flex items-center justify-center text-white text-xs font-bold">CR</div>
+<p class="font-bold text-indigo-700 text-sm">Code Rafters</p>
+</div>
+<button id="logoutBtnMobile" class="text-slate-500 hover:text-slate-700 text-sm font-medium" type="button">Log out</button>
+</header>
+<!-- Main Content -->
+<main class="md:ml-64 pt-20 md:pt-8 p-4 md:p-8 min-h-screen">
+<div class="max-w-3xl mx-auto">
+<div class="bg-white rounded-xl border border-slate-200 shadow-sm p-6 md:p-8">
+<div class="flex items-center gap-3 mb-3">
+<span class="material-symbols-outlined text-indigo-600 text-3xl">settings</span>
+<h2 class="text-xl font-bold text-slate-900">Settings</h2>
+</div>
+<p class="text-slate-500 text-sm leading-relaxed">Manage your account preferences. This section is under construction.</p>
+</div>
+</div>
+</main>
+<script>
+(function () {
+    var token = localStorage.getItem('cr_token');
+    if (!token) { window.location.replace('SignIn.html'); return; }
+
+    function signOut() {
+        fetch('/api/auth/logout', { method: 'POST' }).catch(function () {}).finally(function () {
+            localStorage.clear();
+            window.location.replace('SignIn.html');
+        });
+    }
+
+    var btn = document.getElementById('logoutBtn');
+    if (btn) btn.addEventListener('click', signOut);
+    var btnMobile = document.getElementById('logoutBtnMobile');
+    if (btnMobile) btnMobile.addEventListener('click', signOut);
+})();
+</script>
+</body>
+</html>

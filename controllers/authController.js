@@ -28,6 +28,9 @@ const signToken = (user) =>
         expiresIn: jwtConfig.expiresIn,
     });
 
+// Matches the default JWT_EXPIRES_IN of 7 days so the cookie and token expire together.
+const cookieMaxAge = 7 * 24 * 60 * 60 * 1000;
+
 const register = async (req, res) => {
     const { fullName, employeeId, email, password } = req.body;
 
@@ -130,7 +133,18 @@ const login = async (req, res) => {
     }
 
     const token = signToken(user);
+    res.cookie("cr_token", token, {
+        httpOnly: true,
+        sameSite: "lax",
+        secure: false,
+        maxAge: cookieMaxAge,
+    });
     res.json({ message: "Logged in successfully.", token, user: publicUser(user) });
+};
+
+const logout = (req, res) => {
+    res.clearCookie("cr_token");
+    res.json({ message: "Logged out successfully." });
 };
 
 const forgotPassword = async (req, res) => {
@@ -194,6 +208,7 @@ module.exports = {
     verifyEmail,
     resendOtp,
     login,
+    logout,
     forgotPassword,
     resetPassword,
 };

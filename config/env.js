@@ -11,12 +11,9 @@ const env = {
         secret: process.env.JWT_SECRET || "dev-secret-change-me",
         expiresIn: process.env.JWT_EXPIRES_IN || "7d",
     },
-    email: {
-        host: process.env.EMAIL_HOST || "",
-        port: parseInt(process.env.EMAIL_PORT || "587", 10),
-        user: process.env.EMAIL_USER || "",
-        pass: process.env.EMAIL_PASS || "",
-        from: process.env.EMAIL_FROM || "Code Rafters <no-reply@coderafters.com>",
+    sendgrid: {
+        apiKey: process.env.SENDGRID_API_KEY || "",
+        from: process.env.SENDGRID_FROM || "idreeslang007@gmail.com",
     },
 };
 

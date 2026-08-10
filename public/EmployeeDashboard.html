@@ -141,23 +141,23 @@
             </button>
 </div>
 <nav class="flex-1 px-2 space-y-1 overflow-y-auto">
-<a class="flex items-center gap-3 px-4 py-3 border-l-4 border-primary bg-secondary-container/30 text-primary font-bold transition-all duration-200 ease-in-out rounded-r-lg" href="#">
+<a class="flex items-center gap-3 px-4 py-3 border-l-4 border-primary bg-secondary-container/30 text-primary font-bold transition-all duration-200 ease-in-out rounded-r-lg" href="EmployeeDashboard.html">
 <span class="material-symbols-outlined" data-icon="dashboard">dashboard</span>
 <span class="font-body-base text-body-base">Dashboard</span>
 </a>
-<a class="flex items-center gap-3 px-4 py-3 text-secondary dark:text-secondary-fixed-dim hover:bg-surface-container-high transition-colors transition-all duration-200 ease-in-out rounded-r-lg border-l-4 border-transparent hover:border-outline-variant" href="#">
+<a class="flex items-center gap-3 px-4 py-3 text-secondary dark:text-secondary-fixed-dim hover:bg-surface-container-high transition-colors transition-all duration-200 ease-in-out rounded-r-lg border-l-4 border-transparent hover:border-outline-variant" href="MyRequests.html">
 <span class="material-symbols-outlined" data-icon="assignment">assignment</span>
 <span class="font-body-base text-body-base">My Requests</span>
 </a>
-<a class="flex items-center gap-3 px-4 py-3 text-secondary dark:text-secondary-fixed-dim hover:bg-surface-container-high transition-colors transition-all duration-200 ease-in-out rounded-r-lg border-l-4 border-transparent hover:border-outline-variant" href="#">
+<a class="flex items-center gap-3 px-4 py-3 text-secondary dark:text-secondary-fixed-dim hover:bg-surface-container-high transition-colors transition-all duration-200 ease-in-out rounded-r-lg border-l-4 border-transparent hover:border-outline-variant" href="Attendance.html">
 <span class="material-symbols-outlined" data-icon="calendar_today">calendar_today</span>
 <span class="font-body-base text-body-base">Attendance</span>
 </a>
-<a class="flex items-center gap-3 px-4 py-3 text-secondary dark:text-secondary-fixed-dim hover:bg-surface-container-high transition-colors transition-all duration-200 ease-in-out rounded-r-lg border-l-4 border-transparent hover:border-outline-variant" href="#">
+<a class="flex items-center gap-3 px-4 py-3 text-secondary dark:text-secondary-fixed-dim hover:bg-surface-container-high transition-colors transition-all duration-200 ease-in-out rounded-r-lg border-l-4 border-transparent hover:border-outline-variant" href="Profile.html">
 <span class="material-symbols-outlined" data-icon="person">person</span>
 <span class="font-body-base text-body-base">Profile</span>
 </a>
-<a class="flex items-center gap-3 px-4 py-3 text-secondary dark:text-secondary-fixed-dim hover:bg-surface-container-high transition-colors transition-all duration-200 ease-in-out rounded-r-lg border-l-4 border-transparent hover:border-outline-variant" href="#">
+<a class="flex items-center gap-3 px-4 py-3 text-secondary dark:text-secondary-fixed-dim hover:bg-surface-container-high transition-colors transition-all duration-200 ease-in-out rounded-r-lg border-l-4 border-transparent hover:border-outline-variant" href="Settings.html">
 <span class="material-symbols-outlined" data-icon="settings">settings</span>
 <span class="font-body-base text-body-base">Settings</span>
 </a>
@@ -365,16 +365,22 @@
             render();
         } catch (err) {
             if (err.message.indexOf('token') !== -1 || err.message.indexOf('log in') !== -1) {
-                localStorage.clear();
-                window.location.replace('SignIn.html');
+                signOut();
             } else {
                 window.alert(err.message);
             }
         }
     }
 
+    function signOut() {
+        fetch('/api/auth/logout', { method: 'POST' }).catch(function () {}).finally(function () {
+            localStorage.clear();
+            window.location.replace('SignIn.html');
+        });
+    }
+
     document.getElementById('applyLeaveBtn').addEventListener('click', function () { window.location.href = 'LeaveForm.html'; });
-    document.getElementById('logoutBtn').addEventListener('click', function () { localStorage.clear(); window.location.replace('SignIn.html'); });
+    document.getElementById('logoutBtn').addEventListener('click', signOut);
 
     load();
 })();

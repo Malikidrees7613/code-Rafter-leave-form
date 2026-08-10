@@ -1,5 +1,5 @@
 const mongoose = require("mongoose");
-const { calculateDays } = require("../utils/calculateDays");
+const { calculateDays } = require("../services/CalculateDays");
 
 const leaveFormSchema = new mongoose.Schema(
     {

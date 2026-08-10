@@ -1,15 +1,34 @@
 const path = require("path");
 const express = require("express");
+const cookieParser = require("cookie-parser");
 const multer = require("multer");
 const ApiError = require("./utils/ApiError");
 const authRoute = require("./routes/authRoute");
 const LeaveRoute = require("./routes/LeaveRoute");
 const UserRoute = require("./routes/UserRoute");
+const { protectPage } = require("./middlewares/authMiddleware");
 
 const app = express();
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
+app.use(cookieParser());
+
+// Pages that require a logged-in session. Without a valid JWT cookie the request
+// is redirected to the sign-in page, so a copied URL cannot open them elsewhere.
+const protectedPages = [
+    "EmployeeDashboard.html",
+    "LeaveForm.html",
+    "MyRequests.html",
+    "Attendance.html",
+    "Profile.html",
+    "Settings.html",
+];
+protectedPages.forEach((page) => {
+    app.get(`/${page}`, protectPage, (req, res) => {
+        res.sendFile(path.join(__dirname, "public", page));
+    });
+});
 
 app.use(express.static(path.join(__dirname, "public")));
 app.use("/uploads", express.static(path.join(__dirname, "uploads")));
