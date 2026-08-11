@@ -38,9 +38,7 @@ const restrictTo = (...roles) => (req, res, next) => {
     next();
 };
 
-// Guards protected static pages. The JWT is read from an httpOnly cookie set at
-// login, so pasting a protected page URL into another browser redirects to login.
-// Pass one or more roles to also restrict the page to users with that role.
+
 const protectPage = (...roles) => (req, res, next) => {
     const token = req.cookies.cr_token;
     if (!token) return res.redirect("/SignIn.html");
