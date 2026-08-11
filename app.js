@@ -42,14 +42,14 @@ app.use("/api/leave", LeaveRoute);
 app.use("/api/users", UserRoute);
 
 app.get("/", (req, res) => {
-    res.redirect("/SignIn.html");
+    res.sendFile(path.join(__dirname, "public", "LandingPage.html"));
 });
 
 app.use((req, res) => {
     res.status(404).json({ message: `Route not found: ${req.method} ${req.originalUrl}` });
 });
 
-// eslint-disable-next-line no-unused-vars
+
 app.use((err, req, res, next) => {
     if (err instanceof ApiError) {
         return res.status(err.statusCode).json({ message: err.message });
